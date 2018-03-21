@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import App from './app.vue';
-import './assets/images/bg.jpeg';
-import './assets/styles/test.css';
-import './assets/styles/test-stylus.styl'
+
+// 使用全局样式
+import './assets/styles/global.styl';
 
 // 创建一个div标签
 const root = document.createElement('div');

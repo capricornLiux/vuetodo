@@ -1,5 +1,5 @@
 <template>
-    <div v-bind:class="['todo.completed' ? 'completed' : '', 'todo-item']">
+    <div v-bind:class="[todo.completed ? 'completed' : '', 'todo-item']">
         <input 
             type="checkbox"
             class="toggle"
@@ -20,7 +20,7 @@ export default {
     },
     methods: {
         deleteTodo(){
-            console.log('deleteTodo');
+            this.$emit('del', this.todo.id);
         }
     }
 }

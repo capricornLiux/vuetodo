@@ -7,8 +7,24 @@
             placeholder="添加一个任务→😊"
             @keyup.enter="addTodo"
         >
-        <item :todo="todo"></item>
-        <Tabs :filter="filter"></Tabs>
+
+        <!-- 使用item组件 todo列表 -->
+        <item 
+            :todo="todo"
+            v-for="todo in filteredTodos"
+            :key="todo.id"
+            @del="deleteTodo"
+        >
+        </item>
+
+        <!-- 使用tab组件 底部tab -->
+        <Tabs 
+            :filter="filter" 
+            :todo="todos"
+            @toggle="toggle"
+            @clearCompleted="clearCompleted"
+            >
+        </Tabs>
     </section>
 </template>
 
@@ -17,6 +33,8 @@
 import Item from './item.vue';
 import Tabs from './tabs.vue';
 
+let id = 0;
+
 export default {
     components: {
         Item,
@@ -24,17 +42,50 @@ export default {
     },
     data () {
         return {
-            todo: {
-                id: 0,
-                content: 'This is todo',
-                completed: false
-            },
+            todos: [],
             filter: 'all'
         }
     },
+    // 使用计算型属性过滤todo的状态
+    computed: {
+        filteredTodos(){
+            // 根据filter进行判断
+            if(this.filter == 'all'){
+                // 所有的
+                return this.todos;
+            }
+
+            // 不是所有的
+            const isCompleted = this.filter === 'completed';
+            return this.todos.filter(function (todo) {
+                return todo.completed === isCompleted;
+            })
+        }
+    },
     methods: {
-        addTodo(){
-            console.log('addTodo');
+        addTodo(e){
+            this.todos.unshift({
+                id: id++,
+                content: e.target.value,
+                completed: false // 默认未完成
+            })
+            e.target.value = '';
+        },
+        deleteTodo(para){
+            // 返回符合条件的第一个元素的索引位置
+            let pos = this.todos.findIndex((value, index, arr)=>{
+                return value.id == para;
+            })
+            this.todos.splice(pos, 1);
+        },
+        toggle(tab){
+            this.filter = tab;
+        },
+        clearCompleted(){
+            // 如果使用splice方法进行删除的话, 删除一个之后后面的顺序就变了, 所以不好
+            this.todos = this.todos.filter(function (todo){
+                return todo.completed == false;
+            })
         }
     }
 }

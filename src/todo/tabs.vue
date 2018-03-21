@@ -1,6 +1,6 @@
 <template>
   <div class="helper">
-      <span class="left">2 items left</span>
+      <span class="left">{{unFinishedTodoLength}} items left</span>
       <span class="tabs">
         <span 
             v-for="state in states" 
@@ -21,7 +21,19 @@ export default {
         filter: {
             type: String,
             required: true
+        },
+        todo: {
+            type: Array,
+            required: true
         }
+    },
+    // 使用计算型属性
+    computed: {
+        unFinishedTodoLength(){
+            return this.todo.filter(function (todo) {
+                return todo.completed == false
+            }).length;
+        }  
     },
     data () {
         return {
@@ -34,7 +46,10 @@ export default {
     },
     methods: {
         clearAllCompleted(){
-
+            this.$emit('clearCompleted');
+        },
+        toggleFilter(tab){
+            this.$emit('toggle', tab);
         }
     }
 }

@@ -4,7 +4,7 @@
             type="text"
             class="add-input"
             autofocus="autofocus"
-            placeholder="添加一个任务→😊"
+            placeholder="添加一个任务"
             @keyup.enter="addTodo"
         >
 
@@ -33,6 +33,7 @@
 import Item from './item.vue';
 import Tabs from './tabs.vue';
 
+// 事项索引
 let id = 0;
 
 export default {
@@ -42,6 +43,7 @@ export default {
     },
     data () {
         return {
+            // 项目数组
             todos: [],
             filter: 'all'
         }
@@ -55,22 +57,31 @@ export default {
                 return this.todos;
             }
 
-            // 不是所有的
+            // 过滤条件是不是所有的
+            // filter到这里有可能是 completed / actived
             const isCompleted = this.filter === 'completed';
+
+            // filter, 对数组中的每一项运行给定函数, 返回true的项组成的数组
             return this.todos.filter(function (todo) {
                 return todo.completed === isCompleted;
             })
         }
     },
     methods: {
+
+        // 输入框输入内容, 点击回车按钮时调用
         addTodo(e){
+            // unshift 在数组的前端添加并返回数组的长度
             this.todos.unshift({
-                id: id++,
-                content: e.target.value,
-                completed: false // 默认未完成
+                id: id++, // 事项索引
+                content: e.target.value, // 事项内容
+                completed: false // 事项的完成清空, 默认未完成
             })
+            // 清空输入框
             e.target.value = '';
         },
+
+        // 删除事项
         deleteTodo(para){
             // 返回符合条件的第一个元素的索引位置
             let pos = this.todos.findIndex((value, index, arr)=>{

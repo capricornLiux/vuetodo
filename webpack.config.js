@@ -14,6 +14,7 @@ const config = {
     
     output: {
         filename: '[name].[hash:8].js',
+        // 开发环境不能使用chunkHash, 会报错
         path: path.join(__dirname, 'dist')
     },
     module: {
@@ -81,6 +82,7 @@ if (isDev) {
     config.devServer = {
         port: 9000,
         host: '0.0.0.0',
+        open: true,
         overlay: {
             errors: true
         },
@@ -98,6 +100,14 @@ if (isDev) {
         new webpack.NoEmitOnErrorsPlugin()
     )
 } else {
+
+    // 单独提取类库代码
+    config.entry = {
+        app: path.join(__dirname, 'src/index.js'),
+        // 单独打包
+        vendor: ['vue']
+    }
+
     // 生产环境
     config.output.filename = '[name].[chunkhash:8].js'
     config.module.rules.push(
@@ -121,7 +131,17 @@ if (isDev) {
     )
 
     config.plugins.push(
-        new ExtractTextPlugin('style.[contentHash:8].css')
+        new ExtractTextPlugin('style.[contentHash:8].css'),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor'
+        }),
+
+        // 中间插入的模块, 分配编号, 导致后面的模块编号发生变化, 导致长缓存失效, 解决这个问题
+        // 顺序在vendor后面
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'runtime',
+            minChunks: Infinity
+        })
     )
 }
 

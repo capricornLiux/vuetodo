@@ -5,7 +5,7 @@
         <span 
             v-for="state in states" 
             :key="state" 
-            :class="[state, filter === state ? 'actived' : '']"
+            :class="[filter === state ? 'actived' : '']"
             @click="toggleFilter(state)"
         >
             {{state}}
@@ -30,6 +30,7 @@ export default {
     // 使用计算型属性
     computed: {
         unFinishedTodoLength(){
+            // 数组的filter方法, 返回符合函数条件的数组
             return this.todo.filter(function (todo) {
                 return todo.completed == false
             }).length;

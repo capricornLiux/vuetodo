@@ -13,4 +13,4 @@ document.body.appendChild(root)
 // 实例化的时候没有收到el, 处于'未挂载'状态, 没有关联的dom元素, 使用$mount手动挂载
 new Vue({
   render: (h) => h(App)
-}).$mount(root)
+}).$mount(root )

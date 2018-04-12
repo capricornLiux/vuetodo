@@ -12,12 +12,12 @@
 
 ---
 ### eslint的配置
-* 安装依赖 
+* 安装依赖
 
    ```
    eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node
    ```
-* 配置.eslintrc文件, 
+* 配置.eslintrc文件,
   ```
   {
     "extends": "standard"
@@ -45,3 +45,6 @@
 ### 每次修改代码的时候都执行hint
 * 安装依赖
   * ```eslint-loader babel-eslint```
+
+---
+### precommit 代码提交hook

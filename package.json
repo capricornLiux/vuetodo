@@ -10,7 +10,8 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
     "remove": "rimraf dist",
     "hint": "eslint --ext .js --ext .jsx --ext .vue client/",
-    "hint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue client/"
+    "hint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue client/",
+    "precommit": "yarn run hint-fix"
   },
   "keywords": [],
   "author": "",
@@ -41,6 +42,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.0.7",
+    "husky": "^0.14.3",
     "postcss-loader": "^2.1.2",
     "rimraf": "^2.6.2",
     "style-loader": "^0.20.3",

@@ -20,6 +20,13 @@ const config = {
     module: {
         rules: [
             {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "eslint-loader",
+                enforce: "pre"
+                // 在其他loader处理之前处理
+            },
+            {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: createVueLoaderOptions(isDev)

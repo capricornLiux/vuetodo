@@ -17,42 +17,42 @@
 
 <script>
 export default {
-    props: {
-        filter: {
-            type: String,
-            required: true
-        },
-        todo: {
-            type: Array,
-            required: true
-        }
+  props: {
+    filter: {
+      type: String,
+      required: true
     },
-    // 使用计算型属性
-    computed: {
-        unFinishedTodoLength(){
-            // 数组的filter方法, 返回符合函数条件的数组
-            return this.todo.filter(function (todo) {
-                return todo.completed == false
-            }).length;
-        }  
-    },
-    data () {
-        return {
-            states: [
-                'all',
-                'active',
-                'completed'
-            ]
-        }
-    },
-    methods: {
-        clearAllCompleted(){
-            this.$emit('clearCompleted');
-        },
-        toggleFilter(tab){
-            this.$emit('toggle', tab);
-        }
+    todo: {
+      type: Array,
+      required: true
     }
+  },
+  // 使用计算型属性
+  computed: {
+    unFinishedTodoLength () {
+      // 数组的filter方法, 返回符合函数条件的数组
+      return this.todo.filter(function (todo) {
+        return todo.completed === false
+      }).length
+    }
+  },
+  data () {
+    return {
+      states: [
+        'all',
+        'active',
+        'completed'
+      ]
+    }
+  },
+  methods: {
+    clearAllCompleted () {
+      this.$emit('clearCompleted')
+    },
+    toggleFilter (tab) {
+      this.$emit('toggle', tab)
+    }
+  }
 }
 </script>
 

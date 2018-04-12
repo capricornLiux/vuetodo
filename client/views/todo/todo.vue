@@ -30,75 +30,75 @@
 
 <script>
 
-import Item from './item.vue';
-import Tabs from './tabs.vue';
+import Item from './item.vue'
+import Tabs from './tabs.vue'
 
 // 事项索引
-let id = 0;
+let id = 0
 
 export default {
-    components: {
-        Item,
-        Tabs
-    },
-    data () {
-        return {
-            // 项目数组
-            todos: [],
-            filter: 'all'
-        }
-    },
-    // 使用计算型属性过滤todo的状态
-    computed: {
-        filteredTodos(){
-            // 根据filter进行判断
-            if(this.filter == 'all'){
-                // 所有的
-                return this.todos;
-            }
-
-            // 过滤条件是不是所有的
-            // filter到这里有可能是 completed / actived
-            const isCompleted = this.filter === 'completed';
-
-            // filter, 对数组中的每一项运行给定函数, 返回true的项组成的数组
-            return this.todos.filter(function (todo) {
-                return todo.completed === isCompleted;
-            })
-        }
-    },
-    methods: {
-
-        // 输入框输入内容, 点击回车按钮时调用
-        addTodo(e){
-            // unshift 在数组的前端添加并返回数组的长度
-            this.todos.unshift({
-                id: id++, // 事项索引
-                content: e.target.value, // 事项内容
-                completed: false // 事项的完成清空, 默认未完成
-            })
-            // 清空输入框
-            e.target.value = '';
-        },
-
-        // 删除事项
-        deleteTodo(para){
-            // 返回符合条件的第一个元素的索引位置
-            let pos = this.todos.findIndex((value, index, arr)=>{
-                return value.id == para;
-            })
-            this.todos.splice(pos, 1);
-        },
-        toggle(tab){
-            this.filter = tab;
-        },
-        clearCompleted(){
-            // 如果使用splice方法进行删除的话, 删除一个之后后面的顺序就变了, 所以不好
-            this.todos = this.todos.filter(function (todo){
-                return todo.completed == false;
-            })
-        }
+  components: {
+    Item,
+    Tabs
+  },
+  data () {
+    return {
+      // 项目数组
+      todos: [],
+      filter: 'all'
     }
+  },
+  // 使用计算型属性过滤todo的状态
+  computed: {
+    filteredTodos () {
+      // 根据filter进行判断
+      if (this.filter === 'all') {
+        // 所有的
+        return this.todos
+      }
+
+      // 过滤条件是不是所有的
+      // filter到这里有可能是 completed / actived
+      const isCompleted = this.filter === 'completed'
+
+      // filter, 对数组中的每一项运行给定函数, 返回true的项组成的数组
+      return this.todos.filter(function (todo) {
+        return todo.completed === isCompleted
+      })
+    }
+  },
+  methods: {
+
+    // 输入框输入内容, 点击回车按钮时调用
+    addTodo (e) {
+      // unshift 在数组的前端添加并返回数组的长度
+      this.todos.unshift({
+        id: id++, // 事项索引
+        content: e.target.value, // 事项内容
+        completed: false // 事项的完成清空, 默认未完成
+      })
+      // 清空输入框
+      e.target.value = ''
+    },
+
+    // 删除事项
+    deleteTodo (para) {
+      // 返回符合条件的第一个元素的索引位置
+      let pos = this.todos.findIndex((value, index, arr) => {
+        return value.id === para
+      })
+      this.todos.splice(pos, 1)
+    },
+    toggle (tab) {
+      this.filter = tab
+    },
+    clearCompleted () {
+      // 如果使用splice方法进行删除的话, 删除一个之后后面的顺序就变了, 所以不好
+      this.todos = this.todos.filter(function (todo) {
+        return todo.completed === false
+      })
+    }
+  }
 }
 </script>
 

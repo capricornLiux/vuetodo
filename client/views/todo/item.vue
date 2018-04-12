@@ -27,12 +27,12 @@ export default {
   },
   methods: {
     // 删除事项触发的操作
-    deleteTodo() {
+    deleteTodo () {
       // 触发一个事件, 把id传递出去
-      this.$emit("del", this.todo.id);
+      this.$emit('del', this.todo.id)
     }
   }
-};
+}
 </script>
 
 <style lang="stylus" scoped>

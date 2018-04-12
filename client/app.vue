@@ -16,11 +16,11 @@
 <script>
 
 // 引入header
-import Header from './todo/header.vue';
+import Header from './layout/header.vue';
 // 引入footer
-import Footer from './todo/footer.jsx';
+import Footer from './layout/footer.jsx';
 // 引入todo
-import Todo from './todo/todo.vue';
+import Todo from './views/todo/todo.vue';
 
 export default {
     components: {

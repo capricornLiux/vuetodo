@@ -5,12 +5,12 @@ const config = {
     // webpack编译为类浏览器环境
     target: 'web',
 
-    entry: path.join(__dirname, '../src/index.js'),
+    entry: path.join(__dirname, '../client/index.js'),
      
     output: {
         filename: '[name].[hash:8].js',
         // 开发环境不能使用chunkHash, 会报错
-        path: path.join(__dirname, 'dist')
+        path: path.join(__dirname, '../dist')
     },
     module: {
         rules: [

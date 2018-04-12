@@ -85,7 +85,7 @@ if (isDev) {
     // 生产环境
     config = merge(webpackBaseConfig, { 
         entry: {
-            app: path.join(__dirname, '../src/index.js'),
+            app: path.join(__dirname, '../client/index.js'),
             // 单独打包
             vendor: ['vue']
         }, 

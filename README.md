@@ -9,6 +9,13 @@
 
 ---
 ### vue-loader的配置
+* preserveWhitespace
+* extractCSS
+* cssModules
+* postcss
+* hotReload
+
+###### vue-style-loader热更新样式
 
 ---
 ### eslint的配置

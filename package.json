@@ -11,7 +11,7 @@
     "remove": "rimraf dist",
     "hint": "eslint --ext .js --ext .jsx --ext .vue client/",
     "hint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue client/",
-    "precommit": "yarn run hint-fix"
+    "precommit": "yarn run hint"
   },
   "keywords": [],
   "author": "",

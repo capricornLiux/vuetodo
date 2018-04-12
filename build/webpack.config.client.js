@@ -52,8 +52,16 @@ if (isDev) {
                 {
                     test: /\.styl$/,
                     use: [
-                        'style-loader',
-                        'css-loader',
+                        'vue-style-loader',
+                        // 
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                localIdentName: '[hash:base64:5]',
+                                camelCase: true
+                            }
+                        },
                         {
                             loader: 'postcss-loader',
                             options: {
@@ -97,7 +105,7 @@ if (isDev) {
                 {
                     test: /\.styl$/,
                     use: ExtractTextPlugin.extract({
-                        fallback: 'style-loader',
+                        fallback: 'vue-style-loader',
                         use: [
                             'css-loader',
                             {

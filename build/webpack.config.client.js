@@ -35,7 +35,9 @@ const defaultPlugins = [
   }),
 
   // 自动生成html
-  new HtmlWebpackPlugin()
+  new HtmlWebpackPlugin({
+    template: path.resolve(__dirname, './template.html')
+  })
 ]
 
 // 判断是否是开发模式

@@ -1,15 +1,17 @@
 <template>
     <section class="real-app">
-        <input 
+        <input
             type="text"
             class="add-input"
             autofocus="autofocus"
             placeholder="添加一个任务"
             @keyup.enter="addTodo"
         >
+        <span>{{count}}</span>
+        <button @click="fixCount">btn</button>
 
         <!-- 使用item组件 todo列表 -->
-        <item 
+        <item
             :todo="todo"
             v-for="todo in filteredTodos"
             :key="todo.id"
@@ -18,8 +20,8 @@
         </item>
 
         <!-- 使用tab组件 底部tab -->
-        <Tabs 
-            :filter="filter" 
+        <Tabs
+            :filter="filter"
             :todo="todos"
             @toggle="toggle"
             @clearCompleted="clearCompleted"
@@ -48,6 +50,9 @@ export default {
       filter: 'all'
     }
   },
+  mounted () {
+    console.log(this.$store);
+  },
   // 使用计算型属性过滤todo的状态
   computed: {
     filteredTodos () {
@@ -65,9 +70,18 @@ export default {
       return this.todos.filter(function (todo) {
         return todo.completed === isCompleted
       })
+    },
+    count () {
+      return this.$store.state.count
     }
   },
   methods: {
+
+    // 测试vuex的commit
+    fixCount () {
+      // 通过commit调用一个mutation
+      this.$store.commit('updateCount', 2)
+    },
 
     // 输入框输入内容, 点击回车按钮时调用
     addTodo (e) {

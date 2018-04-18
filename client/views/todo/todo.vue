@@ -38,7 +38,7 @@ import Item from './item.vue'
 import Tabs from './tabs.vue'
 
 // 引入vuex的帮助方法
-import { mapGetters, mapMutations, mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 // 事项索引
 let id = 0

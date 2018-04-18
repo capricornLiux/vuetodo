@@ -207,6 +207,19 @@
       render: (h) => h(App)
     }).$mount('#root')
     ```
+  * 组件中
+    ```javascript
+    computed: {
+      count () {
+        return this.$store.state.count
+      }
+    },
+    // 测试vuex的commit
+    fixCount () {
+      // 通过commit调用一个mutation
+      this.$store.commit('updateCount', 2)
+    },
+    ```
 
 ---
 ### SSR与Vuex
@@ -226,3 +239,72 @@ export default function () {
   })
 }
 ```
+
+---
+### 分离
+* 在vuex.store的创建中, 分离state和mutations
+* 创建getters, 不直接访问state, 通过getters访问state
+
+```javascript
+const state = {
+  count: 0
+}
+
+export default state
+```
+
+```javascript
+const mutations = {
+  updateCount (state, num) {
+    state.count = num
+  }
+}
+
+export default mutations
+```
+
+```javascript
+
+// 可以理解为组件内的computed
+export const count = state => state.count
+
+```
+
+```javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+import state from './state/index'
+import mutations from './mutations/index'
+import * as getters from './getters/index'
+
+Vue.use(Vuex)
+
+const debug = process.env.NODE_ENV !== 'production'
+
+
+// 为了避免SSR内存溢出的问题, 需要导出一个function
+export default function () {
+  return new Vuex.Store({
+    state,
+    mutations,
+    getters,
+    strict: debug
+  })
+}
+
+```
+
+```javascript
+computed: {
+  // count () {
+  //   return this.$store.state.count
+  // }
+
+  // 使用getters
+  count () {
+    return this.$store.getters.count
+  }
+},
+```
+

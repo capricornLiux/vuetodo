@@ -51,7 +51,7 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$store);
+    console.log(this.$store)
   },
   // 使用计算型属性过滤todo的状态
   computed: {
@@ -71,8 +71,13 @@ export default {
         return todo.completed === isCompleted
       })
     },
+    // count () {
+    //   return this.$store.state.count
+    // }
+
+    // 使用getters
     count () {
-      return this.$store.state.count
+      return this.$store.getters.count
     }
   },
   methods: {

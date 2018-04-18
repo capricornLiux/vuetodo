@@ -108,7 +108,7 @@ export default {
       this.$store.commit('updateCount', 2)
     },
 
-    fixCountAsync(){
+    fixCountAsync () {
       this.updateCountAsync({num: 3, time: 2000})
     },
 

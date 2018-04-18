@@ -307,4 +307,7 @@ computed: {
   }
 },
 ```
+---
+### vuex的语法糖
+* mapState
 

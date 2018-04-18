@@ -7,7 +7,9 @@
             placeholder="添加一个任务"
             @keyup.enter="addTodo"
         >
-        <span>{{count}}</span>
+        <p>{{count}}</p>
+        <p>{{addCount}}</p>
+
         <button @click="fixCount">btn</button>
 
         <!-- 使用item组件 todo列表 -->
@@ -34,6 +36,9 @@
 
 import Item from './item.vue'
 import Tabs from './tabs.vue'
+
+// 引入vuex的帮助方法
+import { mapGetters, mapMutations, mapState } from 'vuex'
 
 // 事项索引
 let id = 0
@@ -76,9 +81,16 @@ export default {
     // }
 
     // 使用getters
-    count () {
-      return this.$store.getters.count
-    }
+    // count () {
+    //   return this.$store.getters.count
+    // }
+
+    // 使用语法糖方便的使用store中的数据
+    ...mapState(['count']),
+    // 如果想重新命名数据的名字, 可以使用对象
+    // 也可以使用函数
+
+    ...mapGetters(['addCount'])
   },
   methods: {
 

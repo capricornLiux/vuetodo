@@ -12,6 +12,8 @@
 
         <button @click="fixCount">btn</button>
 
+        <button @click="fixCountAsync">btnAsync</button>
+
         <!-- 使用item组件 todo列表 -->
         <item
             :todo="todo"
@@ -38,7 +40,7 @@ import Item from './item.vue'
 import Tabs from './tabs.vue'
 
 // 引入vuex的帮助方法
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 
 // 事项索引
 let id = 0
@@ -94,10 +96,20 @@ export default {
   },
   methods: {
 
+    // 使用mapActions
+    // 或者使用this.$store.dispatch
+    ...mapActions([
+      'updateCountAsync'
+    ]),
+
     // 测试vuex的commit
     fixCount () {
       // 通过commit调用一个mutation
       this.$store.commit('updateCount', 2)
+    },
+
+    fixCountAsync(){
+      this.updateCountAsync({num: 3, time: 2000})
     },
 
     // 输入框输入内容, 点击回车按钮时调用

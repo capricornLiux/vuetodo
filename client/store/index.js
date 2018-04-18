@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import state from './state/index'
 import mutations from './mutations/index'
 import * as getters from './getters/index'
+import * as actions from './actions/index'
 
 Vue.use(Vuex)
 
@@ -35,6 +36,7 @@ export default function () {
     state,
     mutations,
     getters,
+    actions,
     strict: debug
   })
 }

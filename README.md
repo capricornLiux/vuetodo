@@ -310,4 +310,11 @@ computed: {
 ---
 ### vuex的语法糖
 * mapState
+* mapGetters
 
+---
+### mutations和actions
+
+* mutation只有一个参数payload, 如果传递多个值的时候, 可以使用对象, 在mutation具体方法中使用解构使用
+* 修改state中的数据的时候, 要通过mutation进行修改, 也可以直接修改, 但是不推荐
+* 创建vuex.store的时候可以指定 ```strict``` 控制, **但是生产环境下不要使用, 因为会深度检测状态树, 影响性能**

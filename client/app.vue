@@ -6,7 +6,9 @@
         <Header></Header>
 
         <!-- 使用todo组件 -->
-        <Todo></Todo>
+        <!-- <Todo></Todo> -->
+        <!-- 使用路由站位 -->
+        <router-view></router-view>
 
         <!-- 使用Footer组件 -->
         <Footer></Footer>

@@ -116,3 +116,58 @@
 * 子组件中不要修改props属性的值
   * 子组件中定义props一个事件
 
+---
+### vue-router
+* vue-router默认只用哈希路由 ```http://0.0.0.0:9000/#/```
+* 使用```<router-view></router-view>```组件占位
+* 从定向
+  ```javascript
+  {
+    path: '/',
+    redirect: '/app'
+  },
+  {
+    path: '/app',
+    component: Todo
+  },
+  ```
+
+* 哈希路由很多情况下使用来**定位**使用的, 而且做**SSR**也不希望这种路由, 也不利于SEO
+  ```javascript
+  export default () => {
+    return new Router({
+      // 使用history模式
+      mode: 'history',
+      routes
+    })
+  }
+  ```
+
+* ```base``` 应用的基路径。例如，如果整个单页应用服务在 /app/ 下，然后 base 就应该设为 "/app/"
+  ```javascript
+  export default () => {
+    return new Router({
+      // 使用history模式
+      mode: 'history',
+      // base: '/base/', // 基地址
+      routes
+    })
+  }
+  ```
+
+* ```linkActiveClass``` ```<router-link>``` 标签内部渲染的是a标签, 利于SEO, 给a标签添加了事件, 变成前端路由跳转
+* ```linkExactActiveClass```
+* 输入地址回车404的问题, 因为**使用history模式的路由, 请求的时候需要服务端的处理, 而webpack没有做地址的映射, 所以显示404**, 通过webpack-dev-server的 ```historyApiFallback: true```解决
+* scrollBehavior
+* parseQuery
+* stringifyQuery
+* fallback
+---
+### 路由的参数传递
+
+---
+### 路由守卫
+
+---
+### Vuex
+* 集成

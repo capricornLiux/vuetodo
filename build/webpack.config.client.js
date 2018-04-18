@@ -22,7 +22,12 @@ const devServer = {
   overlay: {
     errors: true
   },
-  hot: true
+  hot: true,
+  // 添加historyApiFallback: true
+  // historyApiFallback: true
+  historyApiFallback: {
+    index: '/index.html'
+  }
 }
 
 // 默认的plugins

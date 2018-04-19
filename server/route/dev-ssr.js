@@ -1,7 +1,7 @@
 // 开发时候的ssr情况
 const path = require('path')
 const fs = require('fs')
-const router = require('koa-router')
+const Router = require('koa-router')
 const axios = require('axios')
 const MemoryFS = require('memory-fs')
 const webpack = require('webpack')
@@ -9,6 +9,9 @@ const VueServerRender = require('vue-server-renderer')
 
 // 获取webpack server config
 const serverConfig = require('../../build/webpack.config.server')
+
+// 导入渲染配置
+const serverRender = require('./server-render')
 
 // 1. 在node环境中, 编译webpack, 生产的compiler, 可以通过run/watch进行编译
 const serverComplier = webpack(serverConfig)
@@ -31,10 +34,10 @@ serverComplier.watch({}, (error, stats) => {
   // 不是打包出现的错误, 通过stats发现
   stats = stats.toJson()
 
-  stats.hasErrors.forEach(err => {
+  stats.errors.forEach(err => {
     console.log(err)
   })
-  stats.hasWarnings.forEach(warning => {
+  stats.warnings.forEach(warning => {
     console.log(warning)
   })
 
@@ -44,8 +47,11 @@ serverComplier.watch({}, (error, stats) => {
     'vue-ssr-server-bundle.json' // 使用vue-server-renderer/client-plugin之后的默认文件名
   )
 
-  // 解析生成json
+  // 解析生成json为bundle对象
   bundle = JSON.parse(mfs.readFileSync(bundlePath, 'utf-8'))
+
+  // log
+  console.log('ssr bundle generated')
 })
 
 // 编写一个中间件...处理ssr要返回的东西
@@ -65,13 +71,26 @@ const handleSSR = async (ctx) => {
 
   // 读取模板文件
   const template = fs.readFileSync(
-    path.join(__dirname, '../server.template.ejs')
+    path.join(__dirname, '../server.template.ejs'),
+    'utf-8'
   )
 
-  // 声明一个renderer
+  /**
+   * 使用 server bundle 和（可选的）选项创建一个 BundleRenderer 实例
+   * webpack + vue-server-renderer/server-plugin 生成的 bundle 对象
+   */
   const renderer = VueServerRender.createBundleRenderer(bundle, {
     // 可以指定一个template, 但是限制比较多
     inject: false,
     clientManifest
   })
+
+  // 使用server-render
+  await serverRender(ctx, renderer, template)
 }
+
+const router = new Router()
+
+router.get('*', handleSSR)
+
+module.exports = router

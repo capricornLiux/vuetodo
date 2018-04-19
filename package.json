@@ -13,7 +13,8 @@
     "hint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue client/",
     "precommit": "yarn run hint-fix",
     "hint-fix-build": "eslint --fix --ext .js build/",
-    "practice": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.practice.js"
+    "practice": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.practice.js",
+    "dev:server": "cross-env NODE_ENV=development node server/app.js"
   },
   "keywords": [],
   "author": "",

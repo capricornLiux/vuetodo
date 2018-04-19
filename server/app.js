@@ -1,5 +1,8 @@
 const Koa = require('koa')
 
+// 导入开发时候的dev-ssr router
+const router = require('./route/dev-ssr')
+
 // 创建application
 const app = new Koa()
 
@@ -22,4 +25,15 @@ app.use(async (ctx, next) => {
       ctx.body = `Please try again later`
     }
   }
+})
+
+// 使用dev-ssr-router
+app.use(router.routes()).use(router.allowedMethods())
+
+// 监听服务启动
+const HOST = process.env.HOST || '0.0.0.0'
+const PORT = process.env.PORT || 3333
+
+app.listen(PORT, HOST, () => {
+  console.log(`ssr server at ${HOST}:${PORT}`)
 })

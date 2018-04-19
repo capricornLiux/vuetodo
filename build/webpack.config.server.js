@@ -4,7 +4,7 @@ const merge = require('webpack-merge')
 const ExtractPlugin = require('extract-text-webpack-plugin')
 
 // 使用vue-server-renderer/client-plugin
-const VueServerPlugin = require('vue-server-renderer/client-plugin')
+const VueServerPlugin = require('vue-server-renderer/server-plugin')
 
 const baseConfig = require('./webpack.config.base')
 

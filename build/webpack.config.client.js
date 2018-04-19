@@ -5,6 +5,9 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+// 添加ssr插件
+const VueServerClientPlugin = require('vue-server-renderer/client-plugin')
+
 // 导入基础配置
 const webpackBaseConfig = require('./webpack.config.base')
 
@@ -42,7 +45,9 @@ const defaultPlugins = [
   // 自动生成html
   new HtmlWebpackPlugin({
     template: path.resolve(__dirname, './template.html')
-  })
+  }),
+
+  new VueServerClientPlugin()
 ]
 
 // 判断是否是开发模式

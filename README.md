@@ -318,3 +318,13 @@ computed: {
 * mutation只有一个参数payload, 如果传递多个值的时候, 可以使用对象, 在mutation具体方法中使用解构使用
 * 修改state中的数据的时候, 要通过mutation进行修改, 也可以直接修改, 但是不推荐
 * 创建vuex.store的时候可以指定 ```strict``` 控制, **但是生产环境下不要使用, 因为会深度检测状态树, 影响性能**
+
+---
+### Vue SSR
+* 有一个server端, 执行SSR的逻辑, 使用```vue-server-renderer```这个包, 在nodejs环境渲染出vue代码生成的html代码, 这部分代码直接返回给用户,
+* 起一个webpack-dev-server服务, 需要使用它的开发功能, 没办法在这里添加SSR的代码
+* 开发的时候有上述两个服务
+  * 正常的开发流程webpack-dev-server
+  * SSR的流程, 也需要打包vue应用的代码逻辑, 打包的内容运行在nodejd端
+  * 所以综上所述, 需要进行两次打包; 在node server中启动一个```webpack server compiler```, 通过它生成一个```server bundle```, 生成的```server bundler```和webpack-dev-server生成的bundle的逻辑有些不同, 通过```vue-server-renderer```渲染出html代码, 直接返回给客户端; 但是执行前端逻辑的时候还需要webpack-dev-server打包的js; server-bundle构建出来只有hmtl骨架
+

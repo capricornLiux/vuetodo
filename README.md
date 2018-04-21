@@ -328,3 +328,10 @@ computed: {
   * SSR的流程, 也需要打包vue应用的代码逻辑, 打包的内容运行在nodejd端
   * 所以综上所述, 需要进行两次打包; 在node server中启动一个```webpack server compiler```, 通过它生成一个```server bundle```, 生成的```server bundler```和webpack-dev-server生成的bundle的逻辑有些不同, 通过```vue-server-renderer```渲染出html代码, 直接返回给客户端; 但是执行前端逻辑的时候还需要webpack-dev-server打包的js; server-bundle构建出来只有hmtl骨架
 
+---
+### vue ssr的静态文件处理
+* 静态文件的请求, 如果不做处理, 默认到server-entry中的router.push
+* 解决方法
+  1. 在server-app.js中设置代理, 将/public/下的请求代理到
+  2. 设置webpack.config.base.js中的publicPath, 添加
+

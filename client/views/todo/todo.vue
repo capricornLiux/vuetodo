@@ -7,12 +7,12 @@
             placeholder="添加一个任务"
             @keyup.enter="addTodo"
         >
-        <p>{{count}}</p>
-        <p>{{addCount}}</p>
+        <!-- <p>{{count}}</p>
+        <p>{{addCount}}</p> -->
 
-        <button @click="fixCount">btn</button>
+        <!-- <button @click="fixCount">btn</button>
 
-        <button @click="fixCountAsync">btnAsync</button>
+        <button @click="fixCountAsync">btnAsync</button> -->
 
         <!-- 使用item组件 todo列表 -->
         <item

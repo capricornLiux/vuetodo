@@ -1,7 +1,8 @@
 const Koa = require('koa')
-
+const send = require('koa-send')
+const path = require('path')
 // 导入开发时候的dev-ssr router
-const router = require('./route/dev-ssr')
+// const router = require('./route/dev-ssr')
 
 // 创建application
 const app = new Koa()
@@ -27,8 +28,26 @@ app.use(async (ctx, next) => {
   }
 })
 
+// 静态文件服务的中间件
+app.use(async (ctx, next) => {
+  if (ctx.path === '/favicon.ico') {
+    await send(ctx, '/favicon.ico', {root: path.join(__dirname, '../')})
+  } else {
+    await next()
+  }
+})
+
+// 判断环境, 使用不同的router
+let pageRouter
+if (isDev) {
+  // 使用开发的router
+  pageRouter = require('./route/dev-ssr')
+} else {
+  pageRouter = require('./route/ssr')
+}
+
 // 使用dev-ssr-router
-app.use(router.routes()).use(router.allowedMethods())
+app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
 // 监听服务启动
 const HOST = process.env.HOST || '0.0.0.0'

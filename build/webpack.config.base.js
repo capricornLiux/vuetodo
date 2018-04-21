@@ -13,9 +13,10 @@ const config = {
   entry: path.join(__dirname, '../client/index.js'),
 
   output: {
-    filename: '[name].[hash:8].js',
+    filename: 'bundle.[hash:8].js',
     // 开发环境不能使用chunkHash, 会报错
-    path: path.join(__dirname, '../dist')
+    path: path.join(__dirname, '../dist'),
+    publicPath: 'http://127.0.0.1:9000/public/'
   },
   module: {
     rules: [

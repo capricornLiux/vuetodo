@@ -64,14 +64,15 @@ const handleSSR = async (ctx) => {
   // 上面生成的ssr内容, 只有body, 需要借助模板生成完整的html
 
   // 通过axios获取webpack-dev-server生成的js文件
-  const clientManifestResp = await axios.get('http://127.0.0.1:9000/vue-ssr-client-manifest.json')
+  const clientManifestResp = await axios.get('http://127.0.0.1:9000/public/vue-ssr-client-manifest.json')
 
   // 解析clientManifestResp
   const clientManifest = clientManifestResp.data
 
   // 读取模板文件
   const template = fs.readFileSync(
-    path.join(__dirname, '../server.template.ejs'),
+    // path.join(__dirname, '../server.template.ejs'),
+    path.join(__dirname, '../template.html'),
     'utf-8'
   )
 
@@ -81,7 +82,9 @@ const handleSSR = async (ctx) => {
    */
   const renderer = VueServerRender.createBundleRenderer(bundle, {
     // 可以指定一个template, 但是限制比较多
-    inject: false,
+    // inject: false,
+    runInNewContext: false,
+    template,
     clientManifest
   })
 

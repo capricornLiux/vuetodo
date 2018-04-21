@@ -1,5 +1,5 @@
 // 使用外部样式文件
-import footerStyle from '../assets/styles/footer.styl'
+import '../assets/styles/footer.styl'
 export default {
   data () {
     return {
@@ -8,7 +8,7 @@ export default {
   },
   render () {
     return (
-      <div id={footerStyle.footer}>
+      <div id="footer">
         <span>Written by {this.author}</span>
       </div>
     )

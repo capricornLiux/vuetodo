@@ -65,14 +65,7 @@ if (isDev) {
           test: /\.styl$/,
           use: [
             'vue-style-loader',
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                localIdentName: '[hash:base64:5]',
-                camelCase: true
-              }
-            },
+            'css-loader',
             {
               loader: 'postcss-loader',
               options: {

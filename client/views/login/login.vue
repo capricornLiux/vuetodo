@@ -28,7 +28,7 @@ export default {
   asyncData: fetchInitialData,
 
   mounted () {
-    fetchInitialData({ store:this.$store, route:this.$route })
+    fetchInitialData({ store: this.$store, route: this.$route })
   },
   computed: {
     ...mapGetters([

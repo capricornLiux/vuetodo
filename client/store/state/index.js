@@ -1,5 +1,6 @@
 const state = {
-  count: 0
+  count: 0,
+  movie: ''
 }
 
 export default state

@@ -335,3 +335,17 @@ computed: {
   1. 在server-app.js中设置代理, 将/public/下的请求代理到
   2. 设置webpack.config.base.js中的publicPath, 添加
 
+---
+### 路径问题
+* base:
+  * path: '..public'
+  * publicPath: '127.0.0.1:9000/public/
+* client
+  * publicPath: '/public/'
+* server
+  * publicPath: '../server-build'
+
+---
+* AC9CE3A3-2537-9543-DB48-E1C858439168
+* 0B:13:25:D7:85:46:0A:67:12:F3:29:88:64:56:63:10:7A:9C:C4:59
+

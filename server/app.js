@@ -1,6 +1,11 @@
 const Koa = require('koa')
 const send = require('koa-send')
 const path = require('path')
+
+const staticRouter = require('./route/static')
+
+// const apiRouter = require('./route/api')
+
 // 导入开发时候的dev-ssr router
 // const router = require('./route/dev-ssr')
 
@@ -36,6 +41,12 @@ app.use(async (ctx, next) => {
     await next()
   }
 })
+
+// 使用静态文件路由
+app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
+
+// 使用api路由
+// app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
 
 // 判断环境, 使用不同的router
 let pageRouter

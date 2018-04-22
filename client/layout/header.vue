@@ -1,12 +1,17 @@
 <template>
   <header class="main-header">
       <h1>TodoList</h1>
+      <button @click="login">login</button>
   </header>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    login() {
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 

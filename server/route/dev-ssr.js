@@ -71,10 +71,12 @@ const handleSSR = async (ctx) => {
 
   // 读取模板文件
   const template = fs.readFileSync(
-    // path.join(__dirname, '../server.template.ejs'),
-    path.join(__dirname, '../template.html'),
+    path.join(__dirname, '../server.template.ejs'),
+    // path.join(__dirname, '../template.html'),
     'utf-8'
   )
+
+  // console.log(template)
 
   /**
    * 使用 server bundle 和（可选的）选项创建一个 BundleRenderer 实例
@@ -82,9 +84,9 @@ const handleSSR = async (ctx) => {
    */
   const renderer = VueServerRender.createBundleRenderer(bundle, {
     // 可以指定一个template, 但是限制比较多
-    // inject: false,
+    inject: false,
     runInNewContext: false,
-    template,
+    // template,
     clientManifest
   })
 

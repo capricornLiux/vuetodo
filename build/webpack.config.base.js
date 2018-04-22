@@ -15,7 +15,7 @@ const config = {
   output: {
     filename: 'bundle.[hash:8].js',
     // 开发环境不能使用chunkHash, 会报错
-    path: path.join(__dirname, '../dist'),
+    path: path.join(__dirname, '../public'),
     publicPath: 'http://127.0.0.1:9000/public/'
   },
   module: {

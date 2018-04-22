@@ -27,8 +27,8 @@ export default {
   asyncData: fetchInitialData,
 
   computed: {
-    ...mapState(['movie']),
-  },
+    ...mapState(['movie'])
+  }
 }
 </script>
 

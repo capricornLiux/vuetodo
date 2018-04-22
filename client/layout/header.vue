@@ -8,7 +8,7 @@
 <script>
 export default {
   methods: {
-    login() {
+    login () {
       this.$router.push('/login')
     }
   }

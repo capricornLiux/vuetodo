@@ -6,10 +6,8 @@ export const updateCountAsync = function ({commit, state}, data) {
 }
 
 export const getMovie = function ({commit, state}) {
-  return axios.get('https://api.douban.com//v2/movie/top250').then((res) => {
-    // console.log('title')
-    // console.log(res)
-    // console.log(res.title)
-    commit('getMovie', res.title)
+  return axios.get('http://localhost:4444').then((res) => {
+    console.log('title')
+    commit('getMovie', res.data.name)
   })
 }

@@ -1,8 +1,0 @@
-// import './lifecycle'
-// import './data-binding'
-// import './computed'
-// import './derective'
-// import './defineComponent'
-// import './componentExtend'
-// import './componentExtend/index2'
-import './v-model'

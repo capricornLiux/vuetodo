@@ -58,7 +58,6 @@ export default {
     }
   },
   mounted () {
-    // console.log(this.$store)
   },
   // 使用计算型属性过滤todo的状态
   computed: {

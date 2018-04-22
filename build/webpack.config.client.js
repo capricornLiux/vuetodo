@@ -21,7 +21,7 @@ let config
 const devServer = {
   port: 9000,
   host: '0.0.0.0',
-  open: true,
+  // open: true,
   overlay: {
     errors: true
   },

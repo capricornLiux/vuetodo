@@ -13,8 +13,6 @@ export default context => {
     router.onReady(() => {
       // 根据路由跳转获取匹配的路由
       const matchedComponents = router.getMatchedComponents()
-      console.log('matchedComponents')
-      console.log(matchedComponents)
 
       if (!matchedComponents.length) {
         // 没有匹配到对应的组件
@@ -23,7 +21,7 @@ export default context => {
 
       Promise.all(matchedComponents.map(Component => {
         if (Component.asyncData) {
-          console.log('asyncData')
+          console.log('匹配到了')
           return Component.asyncData({
             store,
             route: router.currentRoute
@@ -31,12 +29,8 @@ export default context => {
         }
       })).then(() => {
         context.state = store.state
-        console.log('asyncData1')
-        console.log(context.state)
         resolve(app)
       }).catch(reject)
-
-      // resolve(app)
     }, reject)
   })
 }

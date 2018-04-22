@@ -3,31 +3,41 @@
     <p>login</p>
     <input type="text">
     <input type="password">
-    <p>{{movie}}</p>
+    <p>异步的数据: {{movie}}</p>
     <p>{{firstName}}</p>
   </div>
 
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapGetters} from 'vuex'
 
 const fetchInitialData = ({ store, route }) => {
   // console.log('获取的路由数据',route.params.id);
+  console.log('dispatch')
   return store.dispatch('getMovie')
 }
 
 export default {
   data () {
     return {
-      firstName: '2'
+      firstName: '含有异步数据的组件'
     }
   },
 
   asyncData: fetchInitialData,
 
+  mounted () {
+    fetchInitialData({ store:this.$store, route:this.$route })
+  },
   computed: {
-    ...mapState(['movie'])
+    ...mapGetters([
+      'movie'
+    ])
+  },
+  created () {
+    console.log('created')
+    console.log(this.movie)
   }
 }
 </script>

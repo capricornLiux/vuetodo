@@ -11,8 +11,9 @@ module.exports = async (ctx, renderer, template) => {
   // vue-server-renderre渲染完成之后, 在html中插入, 包括client的js路径, css路径
 
   try {
-    // 使用模板引擎
     const appString = await renderer.renderToString(context)
+
+    // console.log(appString)
 
     const html = ejs.render(template, {
       appString,
@@ -22,7 +23,6 @@ module.exports = async (ctx, renderer, template) => {
 
     ctx.body = html
 
-    // 不适用模板引擎
     // renderer.renderToString(context, (err, html) => {
     //   if (err) {
     //     ctx.body = err.message

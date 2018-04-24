@@ -8,8 +8,29 @@ const className = 'todo'
 
 // 创建requres对象
 const request = axios.create({
-  baseUrl: 'http://d.apicloud.com/mcm/api'
+  baseURL: 'https://d.apicloud.com/mcm/api'
 })
+
+/**
+ * 创建错误
+ * @param {错误码} code
+ * @param {错误信息对象} resp
+ */
+const createError = (code, resp) => {
+  const err = new Error(resp.message)
+  err.code = code
+  return err
+}
+
+// 请求结果处理
+const handleRequest = ({status, data, ...rest}) => {
+  console.log('handle request')
+  if (status === 200) {
+    return data
+  } else {
+    throw createError(rest)
+  }
+}
 
 // 初始化db对象
 module.exports = (appId, appKey) => {
@@ -21,10 +42,24 @@ module.exports = (appId, appKey) => {
     }
   }
   return {
+    // 获取所有的todo
     async getAllTodos () {
-      await request.get(`/${className}`, {
+      console.log('get all todos')
+      console.log(request)
+      const result = await request.get(`/${className}`, {
         headers: getHeaders()
       })
+      console.log(result)
+      return handleRequest(await request.get(`/${className}`, {
+        headers: getHeaders()
+      }))
+    },
+
+    async addTodo (todo) {
+      return handleRequest(await request.post(`/${className}`,
+        todo,
+        {headers: getHeaders()}
+      ))
     }
   }
 }

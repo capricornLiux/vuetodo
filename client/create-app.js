@@ -1,7 +1,8 @@
 // 每次ssr渲染都创建一个新的app
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 import Vuex from 'vuex'
+import Meta from 'vue-meta'
 
 import App from './app.vue'
 import CreateStore from './store/index'
@@ -9,8 +10,9 @@ import CreateRouter from './config/router'
 
 import './assets/styles/global.styl'
 
-Vue.use(VueRouter)
+Vue.use(Router)
 Vue.use(Vuex)
+Vue.use(Meta)
 
 // 返回一个function防止内存溢出
 export default () => {

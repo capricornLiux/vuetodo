@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+// 导入state状态集
 import state from './state/index'
+
 import mutations from './mutations/index'
 import * as getters from './getters/index'
 import * as actions from './actions/index'

@@ -47,7 +47,7 @@ serverComplier.watch({}, (error, stats) => {
     'vue-ssr-server-bundle.json' // 使用vue-server-renderer/client-plugin之后的默认文件名
   )
 
-  // 解析生成json为bundle对象
+  // 解析vue-ssr-server-bundle.json生成bundle对象
   bundle = JSON.parse(mfs.readFileSync(bundlePath, 'utf-8'))
 
   // log
@@ -72,21 +72,17 @@ const handleSSR = async (ctx) => {
   // 读取模板文件
   const template = fs.readFileSync(
     path.join(__dirname, '../server.template.ejs'),
-    // path.join(__dirname, '../template.html'),
     'utf-8'
   )
-
-  // console.log(template)
 
   /**
    * 使用 server bundle 和（可选的）选项创建一个 BundleRenderer 实例
    * webpack + vue-server-renderer/server-plugin 生成的 bundle 对象
    */
+  // 生成renderer
   const renderer = VueServerRender.createBundleRenderer(bundle, {
     // 可以指定一个template, 但是限制比较多
     inject: false,
-    runInNewContext: false,
-    // template,
     clientManifest
   })
 

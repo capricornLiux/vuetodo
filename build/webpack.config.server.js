@@ -14,6 +14,7 @@ config = merge(baseConfig, {
   // node环境
   target: 'node',
 
+  // 指定服务器端的入口文件
   entry: path.join(__dirname, '../client/server-entry.js'),
 
   output: {
@@ -23,7 +24,7 @@ config = merge(baseConfig, {
     // 生成的文件不需要hash
     filename: 'server-entry.js',
 
-    // 输出
+    // 输出目录
     path: path.join(__dirname, '../server-build')
   },
 

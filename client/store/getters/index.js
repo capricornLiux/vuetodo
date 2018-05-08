@@ -3,5 +3,3 @@ export const count = state => state.count
 export const addCount = state => {
   return state.count + 'hello'
 }
-
-export const movie = state => state.movie

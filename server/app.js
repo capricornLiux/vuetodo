@@ -1,20 +1,22 @@
-const Koa = require('koa')
-const send = require('koa-send')
 const path = require('path')
-const koaBody = require('koa-body')
+const Koa = require('koa')
 
-const staticRouter = require('./route/static')
+// 静态文件服务中间件
+const send = require('koa-send')
+// const koaBody = require('koa-body')
 
-// api路由
-const apiRouter = require('./route/api')
+// const staticRouter = require('./route/static')
 
-// 导入数据接口
-const createDb = require('./db/db')
-const dbConfig = require('../app.config')
-const db = createDb(dbConfig.db.appId, dbConfig.db.appKey)
+// // api路由
+// const apiRouter = require('./route/api')
+
+// // 导入数据接口
+// const createDb = require('./db/db')
+// const dbConfig = require('../app.config')
+// const db = createDb(dbConfig.db.appId, dbConfig.db.appKey)
 
 // 导入开发时候的dev-ssr router
-// const router = require('./route/dev-ssr')
+const router = require('./route/dev-ssr')
 
 // 创建application
 const app = new Koa()
@@ -30,7 +32,7 @@ app.use(async (ctx, next) => {
     // 执行下一个中间件
     await next()
   } catch (error) {
-    // console.log(error)
+    console.log(error)
     ctx.status = 500
     if (isDev) {
       ctx.body = error.message
@@ -41,10 +43,10 @@ app.use(async (ctx, next) => {
 })
 
 // 数据库的中间件
-app.use(async (ctx, next) => {
-  ctx.db = db
-  await next()
-})
+// app.use(async (ctx, next) => {
+//   ctx.db = db
+//   await next()
+// })
 
 // 静态文件服务的中间件
 app.use(async (ctx, next) => {
@@ -56,25 +58,27 @@ app.use(async (ctx, next) => {
 })
 
 // 使用koaBody
-app.use(koaBody())
+// app.use(koaBody())
 
 // 使用静态文件路由
-app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
+// app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
 
 // 使用api路由
-app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
+// app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
 
 // 判断环境, 使用不同的router
-let pageRouter
-if (isDev) {
-  // 使用开发的router
-  pageRouter = require('./route/dev-ssr')
-} else {
-  pageRouter = require('./route/ssr')
-}
+// let pageRouter
+// if (isDev) {
+//   // 使用开发的router
+//   pageRouter = require('./route/dev-ssr')
+// } else {
+//   pageRouter = require('./route/ssr')
+// }
 
 // 使用dev-ssr-router
-app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
+// app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
+
+app.use(router.routes()).use(router.allowedMethods())
 
 // 监听服务启动
 const HOST = process.env.HOST || '0.0.0.0'

@@ -44,9 +44,11 @@ const defaultPlugins = [
 
   // 自动生成html
   new HtmlWebpackPlugin({
+    // 借助指定的模板生成html
     template: path.resolve(__dirname, './template.html')
   }),
 
+  // 使用vuessr的client插件生成json
   new VueServerClientPlugin()
 ]
 
@@ -64,6 +66,7 @@ if (isDev) {
         {
           test: /\.styl$/,
           use: [
+            // 使用'vue-style-loader'热更新样式
             'vue-style-loader',
             'css-loader',
             {
@@ -87,7 +90,9 @@ if (isDev) {
 
     // 配置plugins
     plugins: defaultPlugins.concat([
+      // 配合devserver的热更新
       new webpack.HotModuleReplacementPlugin(),
+      // 启用此插件后，webpack 进程遇到错误代码将不会退出
       new webpack.NoEmitOnErrorsPlugin()
     ])
   })
@@ -95,7 +100,10 @@ if (isDev) {
   // 生产环境
   config = merge(webpackBaseConfig, {
     entry: {
-      app: path.join(__dirname, '../client/index.js'),
+      // app: path.join(__dirname, '../client/index.js'),
+      // 替换为client-entry.js
+      app: path.join(__dirname, '../client/client-entry.js'),
+
       // 单独打包
       vendor: ['vue']
     },
@@ -107,6 +115,7 @@ if (isDev) {
       rules: [
         {
           test: /\.styl$/,
+          // 生产模式下单独提取样式文件
           use: ExtractTextPlugin.extract({
             fallback: 'vue-style-loader',
             use: [

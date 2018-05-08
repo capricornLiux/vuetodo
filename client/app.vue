@@ -25,6 +25,10 @@ import Footer from './layout/footer.jsx'
 import Todo from './views/todo/todo.vue'
 
 export default {
+  // 使用vue-meta处理头信息, 有上下级关系
+  metaInfo: {
+    title: `lance vue todo`
+  },
   components: {
     Header,
     Footer,

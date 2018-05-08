@@ -1,11 +1,12 @@
-// ssr 打包的入口文件
+// ssr webpack.config.server打包的入口文件
 import CreateApp from './create-app'
 
 // vue-server-renderer传递进来的context
 export default context => {
+  // 返回一个promise
   return new Promise((resolve, reject) => {
     // 解构app, router
-    const {app, router, store} = CreateApp()
+    const {app, router} = CreateApp()
 
     router.push(context.url)
 
@@ -15,22 +16,12 @@ export default context => {
       const matchedComponents = router.getMatchedComponents()
 
       if (!matchedComponents.length) {
-        // 没有匹配到对应的组件
+        // 没有匹配到对应的组件, reject一个错误
         return reject(new Error('no matched component'))
       }
-
-      Promise.all(matchedComponents.map(Component => {
-        if (Component.asyncData) {
-          console.log('匹配到了')
-          return Component.asyncData({
-            store,
-            route: router.currentRoute
-          })
-        }
-      })).then(() => {
-        context.state = store.state
-        resolve(app)
-      }).catch(reject)
-    }, reject)
+      // ssr的时候进行meta设置
+      context.meta = app.$meta()
+      resolve(app)
+    })
   })
 }

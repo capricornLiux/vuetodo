@@ -10,7 +10,10 @@ const config = {
   // webpack编译为类浏览器环境
   target: 'web',
 
-  entry: path.join(__dirname, '../client/index.js'),
+  // entry: path.join(__dirname, '../client/index.js'),
+
+  // 使用client-entry.js
+  entry: path.join(__dirname, '../client/client-entry.js'),
 
   output: {
     filename: 'bundle.[hash:8].js',
@@ -24,8 +27,8 @@ const config = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'eslint-loader',
-        enforce: 'pre'
         // 在其他loader处理之前处理
+        enforce: 'pre'
       },
       {
         test: /\.vue$/,

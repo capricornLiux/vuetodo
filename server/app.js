@@ -3,7 +3,7 @@ const Koa = require('koa')
 
 // 静态文件服务中间件
 const send = require('koa-send')
-// const koaBody = require('koa-body')
+const koaBody = require('koa-body')
 
 const staticRouter = require('./route/static')
 
@@ -19,6 +19,9 @@ const db = createDb(dbConfig.db.appId, dbConfig.db.appKey)
 
 // 创建application
 const app = new Koa()
+
+// 使用koaBody
+app.use(koaBody())
 
 // 判断开发/生产环境, ssr是区分开发/生产环境的
 const isDev = process.env.NODE_ENV === 'development'
@@ -56,9 +59,6 @@ app.use(async (ctx, next) => {
     await next()
   }
 })
-
-// 使用koaBody
-// app.use(koaBody())
 
 // 使用静态文件路由
 app.use(staticRouter.routes()).use(staticRouter.allowedMethods())

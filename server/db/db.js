@@ -23,8 +23,16 @@ const createError = (code, resp) => {
   return err
 }
 
-// 请求结果处理
-const handleRequest = ({status, data, ...rest}) => {
+/**
+ * 处理请求结果
+ * @param {object} - 请求结果对象
+ * @returns {any} 返回数据或者抛出错误
+ */
+const handleRequest = ({
+  status,
+  data,
+  ...rest
+}) => {
   if (status === 200) {
     return data
   } else {
@@ -45,18 +53,71 @@ module.exports = (appId, appKey) => {
   return {
     // 获取所有的todo
     async getAllTodos () {
-      const result = await request.get(`/${className}`, {
-        headers: getHeaders()
-      })
       return handleRequest(await request.get(`/${className}`, {
         headers: getHeaders()
       }))
     },
 
+    // 添加todo
+
+    /**
+     * 添加todo
+     * @param {object} todo - 需要添加的todo对象
+     * @returns {any} 返回响应数据或抛出一个错误
+     */
     async addTodo (todo) {
       return handleRequest(await request.post(`/${className}`,
-        todo,
-        {headers: getHeaders()}
+        todo, {
+          headers: getHeaders()
+        }
+      ))
+    },
+
+    /**
+     * 修改todo的状态
+     * @param {String} id - 需要修改的todo的id
+     * @param {Object} todo - 需要修改的todo对象
+     * @returns {any} 返回响应数据或抛出一个错误
+     */
+    async updateTodo (id, todo) {
+      return handleRequest(await request.put(
+        `/${className}/${id}`,
+        todo, {
+          headers: getHeaders()
+        }
+      ))
+    },
+
+    /**
+     * 删除一个todo
+     * @param {String} id - 需要删除的todo的id
+     * @returns {any} 返回响应数据或抛出一个错误
+     */
+    async deleteTodo (id) {
+      return handleRequest(await request.delete(
+        `/${className}/${id}`, {
+          headers: getHeaders()
+        }
+      ))
+    },
+
+    // 删除多个todo
+    async deleteCompleted (ids) {
+      // 批处理操作, 按照apicloud的要求进行编写
+      console.log(ids)
+      const requests = ids.map(id => {
+        return {
+          method: 'DELETE',
+          path: `/mcm/api/${className}/${id}`
+        }
+      })
+
+      return handleRequest(await request.post(
+        '/batch', {
+          requests
+        }, {
+          headers: getHeaders()
+        }
       ))
     }
   }

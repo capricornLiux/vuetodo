@@ -15,36 +15,36 @@ export default {
   metaInfo: {
     title: `login`
   },
-  data() {
+  data () {
     return {
-      errorMsg: "",
-      username: "",
-      password: ""
-    };
+      errorMsg: '',
+      username: '',
+      password: ''
+    }
   },
   methods: {
-    doSubmit(e) {
+    doSubmit (e) {
       // 默认表单提交并跳转页面, 阻止这些行为
-      e.preventDefault();
+      e.preventDefault()
       if (this.validate()) {
         // 调用登录接口
-        console.log(`// 调用登录接口`);
+        console.log(`// 调用登录接口`)
       }
     },
-    validate() {
+    validate () {
       if (!this.username.trim()) {
-        this.errorMsg = "用户名不能为空";
-        return false;
+        this.errorMsg = '用户名不能为空'
+        return false
       }
       if (!this.password.trim()) {
-        this.errorMsg = "密码不能为空";
-        return false;
+        this.errorMsg = '密码不能为空'
+        return false
       }
-      this.errorMsg = "";
-      return true;
+      this.errorMsg = ''
+      return true
     }
   }
-};
+}
 </script>
 
 <style lang="stylus" scoped>

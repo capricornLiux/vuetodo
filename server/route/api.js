@@ -13,6 +13,24 @@ const successResponse = data => {
   }
 }
 
+/**
+ * 校验是否登录的中间件
+ * @param {*} ctx - 上下文
+ * @param {*} next - 下一个中间件
+ */
+const loginValidator = async (ctx, next) => {
+  if (!ctx.session.user) {
+    // 返回401未授权状态码
+    ctx.status = 401
+    ctx.body = '请先登录'
+  } else {
+    await next()
+  }
+}
+
+// 所有中间件处理之前, 先使用loginValidator
+apiRouter.use(loginValidator)
+
 // 路由匹配到get todos, 调用获取所有的todos方法
 apiRouter.get('/todos', async ctx => {
   // 从ctx上下文中获取db对象, 并请求数据

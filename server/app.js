@@ -5,10 +5,17 @@ const Koa = require('koa')
 const send = require('koa-send')
 const koaBody = require('koa-body')
 
+// 使用session
+const session = require('koa-session')
+
+// 静态文件路由
 const staticRouter = require('./route/static')
 
 // api路由
 const apiRouter = require('./route/api')
+
+// user/login路由
+const userRouter = require('./route/user')
 
 // 导入创建数据库对象的方法
 const createDb = require('./db/db')
@@ -19,6 +26,15 @@ const db = createDb(dbConfig.db.appId, dbConfig.db.appKey)
 
 // 创建application
 const app = new Koa()
+
+// 使用session
+app.keys = ['vue ssr demo']
+const CONFIG = {
+  key: 'vue-ssr-id',
+  maxAge: 1000 * 2 * 60 * 60
+}
+
+app.use(session(CONFIG, app))
 
 // 使用koaBody
 app.use(koaBody())
@@ -59,6 +75,9 @@ app.use(async (ctx, next) => {
     await next()
   }
 })
+
+// 使用user/login路由
+app.use(userRouter.routes()).use(userRouter.allowedMethods())
 
 // 使用静态文件路由
 app.use(staticRouter.routes()).use(staticRouter.allowedMethods())

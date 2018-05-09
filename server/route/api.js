@@ -5,6 +5,7 @@ const apiRouter = new Router({
   prefix: '/api'
 })
 
+// 对成功响应的封装
 const successResponse = data => {
   return {
     success: true,
@@ -12,8 +13,8 @@ const successResponse = data => {
   }
 }
 
-apiRouter.get('/todos', async ctx => {
-  console.log('get todos')
+apiRouter.get('/todo', async ctx => {
+  // 从ctx上下文中获取db对象, 并请求数据
   const todos = await ctx.db.getAllTodos()
   // ctx.body = todos
   ctx.body = successResponse(todos)

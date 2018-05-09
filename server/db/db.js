@@ -1,5 +1,5 @@
 // 数据库
-// 安装sha1, 请求线上数据库的签名
+// 安装sha1, 用于生成请求线上数据库的签名
 const sha1 = require('sha1')
 const axios = require('axios')
 
@@ -8,6 +8,7 @@ const className = 'todo'
 
 // 创建requres对象
 const request = axios.create({
+  // 指定baseURL
   baseURL: 'https://d.apicloud.com/mcm/api'
 })
 
@@ -24,16 +25,16 @@ const createError = (code, resp) => {
 
 // 请求结果处理
 const handleRequest = ({status, data, ...rest}) => {
-  console.log('handle request')
   if (status === 200) {
     return data
   } else {
-    throw createError(rest)
+    throw createError(status, rest)
   }
 }
 
 // 初始化db对象
 module.exports = (appId, appKey) => {
+  // 请求线上数据库的时候需要的header, 每次请求的时候都需要创建
   const getHeaders = () => {
     const now = Date.now()
     return {
@@ -44,12 +45,9 @@ module.exports = (appId, appKey) => {
   return {
     // 获取所有的todo
     async getAllTodos () {
-      console.log('get all todos')
-      console.log(request)
       const result = await request.get(`/${className}`, {
         headers: getHeaders()
       })
-      console.log(result)
       return handleRequest(await request.get(`/${className}`, {
         headers: getHeaders()
       }))

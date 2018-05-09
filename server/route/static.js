@@ -8,9 +8,6 @@ const router = new Router({
 })
 
 router.get('/*', async ctx => {
-  // console.log('static.js')
-  // console.log(ctx.path)
-  // /public/style.1458fb5e.css
   await send(ctx, ctx.path, {root: path.join(__dirname, '../../')})
 })
 

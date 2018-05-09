@@ -50,7 +50,6 @@ serverComplier.watch({}, (error, stats) => {
   // 解析vue-ssr-server-bundle.json生成bundle对象
   bundle = JSON.parse(mfs.readFileSync(bundlePath, 'utf-8'))
 
-  // log
   console.log('ssr bundle generated')
 })
 

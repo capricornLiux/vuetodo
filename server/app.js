@@ -5,18 +5,17 @@ const Koa = require('koa')
 const send = require('koa-send')
 // const koaBody = require('koa-body')
 
-// const staticRouter = require('./route/static')
+const staticRouter = require('./route/static')
 
-// // api路由
-// const apiRouter = require('./route/api')
+// api路由
+const apiRouter = require('./route/api')
 
-// // 导入数据接口
-// const createDb = require('./db/db')
-// const dbConfig = require('../app.config')
-// const db = createDb(dbConfig.db.appId, dbConfig.db.appKey)
-
-// 导入开发时候的dev-ssr router
-const router = require('./route/dev-ssr')
+// 导入创建数据库对象的方法
+const createDb = require('./db/db')
+// 导入app配置信息
+const dbConfig = require('../app.config')
+// 使用app配置信息创建数据库
+const db = createDb(dbConfig.db.appId, dbConfig.db.appKey)
 
 // 创建application
 const app = new Koa()
@@ -43,10 +42,11 @@ app.use(async (ctx, next) => {
 })
 
 // 数据库的中间件
-// app.use(async (ctx, next) => {
-//   ctx.db = db
-//   await next()
-// })
+app.use(async (ctx, next) => {
+  // 将数据库对象挂载到ctx上下文中
+  ctx.db = db
+  await next()
+})
 
 // 静态文件服务的中间件
 app.use(async (ctx, next) => {
@@ -61,24 +61,22 @@ app.use(async (ctx, next) => {
 // app.use(koaBody())
 
 // 使用静态文件路由
-// app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
+app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
 
 // 使用api路由
-// app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
+app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
 
 // 判断环境, 使用不同的router
-// let pageRouter
-// if (isDev) {
-//   // 使用开发的router
-//   pageRouter = require('./route/dev-ssr')
-// } else {
-//   pageRouter = require('./route/ssr')
-// }
+let pageRouter
+if (isDev) {
+  // 使用开发的router
+  pageRouter = require('./route/dev-ssr')
+} else {
+  pageRouter = require('./route/ssr')
+}
 
 // 使用dev-ssr-router
-// app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
-
-app.use(router.routes()).use(router.allowedMethods())
+app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
 // 监听服务启动
 const HOST = process.env.HOST || '0.0.0.0'

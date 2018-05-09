@@ -8,6 +8,7 @@
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.config.client.js",
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.config.server.js",
     "build": "yarn run remove && yarn run build:client && yarn run build:server",
+    "start": "cross-env NODE_ENV=production node server/app.js",
     "remove": "rimraf public && rimraf server-build",
     "hint": "eslint --ext .js --ext .jsx --ext .vue client/",
     "hint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue client/",

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
   metaInfo: {
     title: `login`
@@ -23,12 +24,22 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['login']),
     doSubmit (e) {
       // 默认表单提交并跳转页面, 阻止这些行为
       e.preventDefault()
       if (this.validate()) {
         // 调用登录接口
-        console.log(`// 调用登录接口`)
+
+        // 执行action
+        this.login({
+          username: this.username,
+          password: this.password
+        }).then(() => {
+          // resolve的时候, 表示登录成功了
+          // 进行路由跳转, 使用replace
+          this.$router.replace('/app')
+        })
       }
     },
     validate () {

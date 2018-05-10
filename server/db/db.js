@@ -104,7 +104,6 @@ module.exports = (appId, appKey) => {
     // 删除多个todo
     async deleteCompleted (ids) {
       // 批处理操作, 按照apicloud的要求进行编写
-      console.log(ids)
       const requests = ids.map(id => {
         return {
           method: 'DELETE',

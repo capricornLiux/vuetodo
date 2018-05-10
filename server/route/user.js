@@ -7,7 +7,7 @@ const userRouter = new Router({
 userRouter.post('/login', async ctx => {
   const user = ctx.request.body
   // 如果用户名和密码正确, 设置session, 返回正确的response
-  if (user.name === 'lance' && user.pwd === 896328) {
+  if (user.username === 'lance' && user.password === '896328') {
     ctx.session.user = {
       username: 'lance'
     }

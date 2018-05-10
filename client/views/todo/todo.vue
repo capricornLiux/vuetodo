@@ -7,12 +7,6 @@
             placeholder="添加一个任务"
             @keyup.enter="addTodo"
         >
-        <!-- <p>{{count}}</p>
-        <p>{{addCount}}</p> -->
-
-        <!-- <button @click="fixCount">btn</button>
-
-        <button @click="fixCountAsync">btnAsync</button> -->
 
         <!-- 使用item组件 todo列表 -->
         <item
@@ -40,7 +34,7 @@ import Item from './item.vue'
 import Tabs from './tabs.vue'
 
 // 引入vuex的帮助方法
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 // 事项索引
 let id = 0
@@ -53,14 +47,18 @@ export default {
   data () {
     return {
       // 项目数组
-      todos: [],
+      // todos: [],
       filter: 'all'
     }
   },
   mounted () {
+    this.fetchTodos()
   },
   // 使用计算型属性过滤todo的状态
   computed: {
+    ...mapGetters([
+      'todos'
+    ]),
     filteredTodos () {
       // 根据filter进行判断
       if (this.filter === 'all') {
@@ -76,30 +74,11 @@ export default {
       return this.todos.filter(function (todo) {
         return todo.completed === isCompleted
       })
-    },
-    // count () {
-    //   return this.$store.state.count
-    // }
-
-    // 使用getters
-    // count () {
-    //   return this.$store.getters.count
-    // }
-
-    // 使用语法糖方便的使用store中的数据
-    ...mapState(['count']),
-    // 如果想重新命名数据的名字, 可以使用对象
-    // 也可以使用函数
-
-    ...mapGetters(['addCount'])
+    }
   },
   methods: {
-
-    // 使用mapActions
-    // 或者使用this.$store.dispatch
-    ...mapActions([
-      'updateCountAsync'
-    ]),
+    // 将 `this.fetchTodos()` 映射为 `this.$store.dispatch('fetchTodos')`
+    ...mapActions(['fetchTodos']),
 
     // 测试vuex的commit
     fixCount () {

@@ -78,17 +78,10 @@ export default {
   },
   methods: {
     // 将 `this.fetchTodos()` 映射为 `this.$store.dispatch('fetchTodos')`
-    ...mapActions(['fetchTodos']),
-
-    // 测试vuex的commit
-    fixCount () {
-      // 通过commit调用一个mutation
-      this.$store.commit('updateCount', 2)
-    },
-
-    fixCountAsync () {
-      this.updateCountAsync({num: 3, time: 2000})
-    },
+    ...mapActions([
+      'fetchTodos',
+      'addTodo'
+    ]),
 
     // 输入框输入内容, 点击回车按钮时调用
     addTodo (e) {

@@ -9,6 +9,19 @@ const handleErr = err => {
   }
 }
 
+export const login = ({commit}, {username, password}) => {
+  return new Promise((resolve, reject) => {
+    model.login(username, password).then(res => {
+      commit('doLogin', res)
+      // alert('登录成功') // eslint-disable-line
+      resolve()
+    }).catch(err => {
+      handleErr(err)
+      reject(err)
+    })
+  })
+}
+
 export const fetchTodos = ({commit}) => {
   model.getAllTodos().then(res => {
     commit('getTodos', res)
@@ -17,19 +30,35 @@ export const fetchTodos = ({commit}) => {
   })
 }
 
-export const login = ({commit}, {username, password}) => {
-  return new Promise((resolve, reject) => {
-    model.login(username, password).then(res => {
-      commit('doLogin', res)
-      // alert('登录成功') // eslint-disable-line
-      // this.$message({
-      //   message: '恭喜你，这是一条成功消息',
-      //   type: 'success'
-      // })
-      resolve()
-    }).catch(err => {
-      handleErr(err)
-      reject(err)
-    })
+export const addTodo = ({commit}, todo) => {
+  model.createTodo(todo).then(res => {
+    commit('addTodo', res)
+  }).catch(err => {
+    handleErr(err)
+  })
+}
+
+export const deleteTodo = ({commit}, id) => {
+  model.deleteTodo(id).then(res => {
+    commit('deleteTodo', id)
+  }).catch(err => {
+    handleErr(err)
+  })
+}
+
+export const deleteCompleted = ({commit, state}) => {
+  const ids = state.todos.filter(todo => todo.completed).map(todo => todo.id)
+  model.deleteCompleted(ids).then(res => {
+    commit('deleteCompleted')
+  }).catch(err => {
+    handleErr(err)
+  })
+}
+
+export const updateTodo = ({commit}, {id, todo}) => {
+  model.updateTodo(id, todo).then(res => {
+    commit('updateTodo', {id, todo: res})
+  }).catch(err => {
+    handleErr(err)
   })
 }

@@ -2,10 +2,12 @@
     <!-- 根据事项的完成情况, 展示不同的样式 -->
     <div v-bind:class="[todo.completed ? 'completed' : '', 'todo-item']">
         <!-- 显示完成情况的checkbox -->
-        <input 
+        <!-- 不能使用v-model了, 使用@click事件控制点击那一刻 -->
+        <input
             type="checkbox"
             class="toggle"
-            v-model="todo.completed"
+            :checked="todo.completed"
+            @click="handleToggle"
         >
         <!-- 显示事项内容 -->
         <label>{{todo.content}}</label>
@@ -30,6 +32,11 @@ export default {
     deleteTodo () {
       // 触发一个事件, 把id传递出去
       this.$emit('del', this.todo.id)
+    },
+    handleToggle (e) {
+      // 阻止默认的change事件
+      e.preventDefault()
+      this.$emit('toggle', this.todo)
     }
   }
 }

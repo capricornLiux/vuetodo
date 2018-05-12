@@ -5,7 +5,7 @@
             class="add-input"
             autofocus="autofocus"
             placeholder="添加一个任务"
-            @keyup.enter="addTodo"
+            @keyup.enter="handleAdd"
         >
 
         <!-- 使用item组件 todo列表 -->
@@ -14,6 +14,7 @@
             v-for="todo in filteredTodos"
             :key="todo.id"
             @del="deleteTodo"
+            @toggle="toggleTodoState"
         >
         </item>
 
@@ -37,7 +38,7 @@ import Tabs from './tabs.vue'
 import { mapGetters, mapActions } from 'vuex'
 
 // 事项索引
-let id = 0
+// let id = 0
 
 export default {
   components: {
@@ -46,19 +47,20 @@ export default {
   },
   data () {
     return {
-      // 项目数组
-      // todos: [],
+      // 默认的过滤条件
       filter: 'all'
     }
   },
   mounted () {
+    // 调用获取todos的方法
     this.fetchTodos()
   },
-  // 使用计算型属性过滤todo的状态
   computed: {
+    // 使用vuex的getter获取state中的todos
     ...mapGetters([
       'todos'
     ]),
+    // 使用计算型属性过滤todo的状态
     filteredTodos () {
       // 根据filter进行判断
       if (this.filter === 'all') {
@@ -80,37 +82,66 @@ export default {
     // 将 `this.fetchTodos()` 映射为 `this.$store.dispatch('fetchTodos')`
     ...mapActions([
       'fetchTodos',
-      'addTodo'
+      'addTodo',
+      'deleteTodo',
+      'updateTodo',
+      'deleteCompleted' // 删除完成的
     ]),
 
     // 输入框输入内容, 点击回车按钮时调用
-    addTodo (e) {
-      // unshift 在数组的前端添加并返回数组的长度
-      this.todos.unshift({
-        id: id++, // 事项索引
-        content: e.target.value, // 事项内容
-        completed: false // 事项的完成清空, 默认未完成
-      })
-      // 清空输入框
-      e.target.value = ''
+    // addTodo (e) {
+    //   // unshift 在数组的前端添加并返回数组的长度
+    //   this.todos.unshift({
+    //     id: id++, // 事项索引
+    //     content: e.target.value, // 事项内容
+    //     completed: false // 事项的完成清空, 默认未完成
+    //   })
+    //   // 清空输入框
+    //   e.target.value = ''
+    // },
+    handleAdd (e) {
+      const content = e.target.value.trim()
+      if (!content) {
+        alert('请输入提醒内容') // eslint-disable-line
+      } else {
+        // 有输入的内容
+        const todo = {
+          content,
+          completed: false
+        }
+        this.addTodo(todo)
+        e.target.value = ''
+      }
     },
 
     // 删除事项
-    deleteTodo (para) {
-      // 返回符合条件的第一个元素的索引位置
-      let pos = this.todos.findIndex((value, index, arr) => {
-        return value.id === para
+    // deleteTodo (para) {
+    //   // 返回符合条件的第一个元素的索引位置
+    //   let pos = this.todos.findIndex((value, index, arr) => {
+    //     return value.id === para
+    //   })
+    //   this.todos.splice(pos, 1)
+    // },
+
+    // 切换todo状态
+    toggleTodoState (todo) {
+      this.updateTodo({
+        id: todo.id,
+        todo: Object.assign({}, todo, {
+          completed: !todo.compeleted
+        })
       })
-      this.todos.splice(pos, 1)
     },
+
     toggle (tab) {
       this.filter = tab
     },
     clearCompleted () {
       // 如果使用splice方法进行删除的话, 删除一个之后后面的顺序就变了, 所以不好
-      this.todos = this.todos.filter(function (todo) {
-        return todo.completed === false
-      })
+      // this.todos = this.todos.filter(function (todo) {
+      //   return todo.completed === false
+      // })
+      this.deleteCompleted()
     }
   }
 }

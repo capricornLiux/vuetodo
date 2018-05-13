@@ -28,13 +28,13 @@
 import {mapGetters} from 'vuex'
 
 // 引入header
-import Header from "./layout/header.vue";
+import Header from './layout/header.vue'
 
 // 引入footer
-import Footer from "./layout/footer.jsx";
+import Footer from './layout/footer.jsx'
 
 // 引入loading
-import Loading from "./components/loading/loading.vue";
+import Loading from './components/loading/loading.vue'
 
 export default {
   // 使用vue-meta处理头信息, 有上下级关系
@@ -50,7 +50,7 @@ export default {
     // 获取state中存储的loading状态
     ...mapGetters(['loading'])
   }
-};
+}
 </script>
 
 <style lang="stylus" scoped>

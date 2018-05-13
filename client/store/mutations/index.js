@@ -24,6 +24,13 @@ const mutations = {
       1,
       todo
     )
+  },
+  // loading相关
+  startLoading (state) {
+    state.loading = true
+  },
+  stopLoading (state) {
+    state.loading = false
   }
 }
 

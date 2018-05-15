@@ -36,6 +36,7 @@ export default {
     handleToggle (e) {
       // 阻止默认的change事件
       e.preventDefault()
+      // 触发一个toggle事件, 并将当前的todo传递出去
       this.$emit('toggle', this.todo)
     }
   }

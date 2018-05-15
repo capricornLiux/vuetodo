@@ -24,7 +24,7 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(vue|js|jsx)$/,
         exclude: /node_modules/,
         loader: 'eslint-loader',
         // 在其他loader处理之前处理
@@ -34,6 +34,11 @@ const config = {
         test: /\.vue$/,
         loader: 'vue-loader'
         // options: createVueLoaderOptions(isDev)
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.jsx$/,
@@ -50,11 +55,6 @@ const config = {
             }
           }
         ]
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
       }
     ]
   }

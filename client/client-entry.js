@@ -2,6 +2,7 @@
 import CreateApp from './create-app'
 import bus from './util/eventBus'
 
+// 从CreateApp中解构app, router
 const {
   app,
   router
@@ -11,6 +12,7 @@ bus.$on('navLogin', () => {
   router.push('/login')
 })
 
+// 等待异步加载路由组件加载完成
 router.onReady(() => {
   app.$mount('#root')
 })

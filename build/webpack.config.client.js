@@ -1,21 +1,18 @@
-const merge = require('webpack-merge')
-
 const path = require('path')
+
+const merge = require('webpack-merge')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 // 添加ssr插件
-const VueServerClientPlugin = require('vue-server-renderer/client-plugin')
+const VueClientPlugin = require('vue-server-renderer/client-plugin')
 
 // 导入基础配置
 const webpackBaseConfig = require('./webpack.config.base')
 
 // 判断是否是开发模式
 const isDev = process.env.NODE_ENV === 'development'
-
-// 最终导出的webpack配置
-let config
 
 // 单独拿出 webpack dev server的配置, 方便管理
 const devServer = {
@@ -29,7 +26,12 @@ const devServer = {
   // 添加historyApiFallback: true
   // historyApiFallback: true
   historyApiFallback: {
-    index: '/index.html'
+    index: 'public/index.html'
+  },
+  // 前端请求代理到node端, 解决前端跨域问题
+  proxy: {
+    '/api': 'http://127.0.0.1:3333',
+    '/user': 'http://127.0.0.1:3333'
   }
 }
 
@@ -49,8 +51,11 @@ const defaultPlugins = [
   }),
 
   // 使用vuessr的client插件生成json
-  new VueServerClientPlugin()
+  new VueClientPlugin()
 ]
+
+// 最终导出的webpack配置
+let config
 
 // 判断是否是开发模式
 if (isDev) {
@@ -112,26 +117,24 @@ if (isDev) {
       publicPath: '/public/'
     },
     module: {
-      rules: [
-        {
-          test: /\.styl$/,
-          // 生产模式下单独提取样式文件
-          use: ExtractTextPlugin.extract({
-            fallback: 'vue-style-loader',
-            use: [
-              'css-loader',
-              {
-                loader: 'postcss-loader',
-                options: {
-                  sourceMap: true
-                  // 使用stylus-loader生成的sourcemap
-                }
-              },
-              'stylus-loader'
-            ]
-          })
-        }
-      ]
+      rules: [{
+        test: /\.styl$/,
+        // 生产模式下单独提取样式文件
+        use: ExtractTextPlugin.extract({
+          fallback: 'vue-style-loader',
+          use: [
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true
+                // 使用stylus-loader生成的sourcemap
+              }
+            },
+            'stylus-loader'
+          ]
+        })
+      }]
     },
 
     plugins: defaultPlugins.concat([

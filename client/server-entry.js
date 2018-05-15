@@ -3,11 +3,13 @@ import CreateApp from './create-app'
 
 // vue-server-renderer传递进来的context
 export default context => {
-  // 返回一个promise
+  // 因为有可能是一个异步路由钩子函数或组件, 所以返回一个promise
+  // 以便服务器在渲染前就已经就绪了所有内容
   return new Promise((resolve, reject) => {
     // 解构app, router
     const {app, router} = CreateApp()
 
+    // 设置服务器端的router位置
     router.push(context.url)
 
     // 执行一些异步的操作...

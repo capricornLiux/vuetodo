@@ -14,7 +14,12 @@ module.exports = async (ctx, renderer, template) => {
 
   try {
     // 生成body部分
+    console.log('render.renderToString')
+    console.log(context)
     const appString = await renderer.renderToString(context)
+
+    console.log('after render.renderToString')
+    console.log(context)
 
     // 获取meta信息
     const {title} = context.meta.inject()

@@ -19,6 +19,8 @@ config = merge(baseConfig, {
 
   output: {
     // 指定写的代码导出的形式
+    // 入口起点的返回值将分配给 module.exports 对象。
+    // 这个名称也意味着模块用于 CommonJS 环境
     libraryTarget: 'commonjs2',
 
     // 生成的文件不需要hash

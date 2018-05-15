@@ -4,3 +4,4 @@ server-build
 public
 .idea/
 *.log
+.vscode

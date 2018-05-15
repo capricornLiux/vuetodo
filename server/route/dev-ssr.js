@@ -41,7 +41,7 @@ serverComplier.watch({}, (error, stats) => {
     console.log(warning)
   })
 
-  // 获取打包生成的json文件路径
+  // 获取打包生成的vue-ssr-server-bundle.json文件路径
   const bundlePath = path.join(
     serverConfig.output.path,
     'vue-ssr-server-bundle.json' // 使用vue-server-renderer/client-plugin之后的默认文件名
@@ -85,12 +85,14 @@ const handleSSR = async (ctx) => {
     clientManifest
   })
 
-  // 使用server-render
+  // 使用server-render进行渲染
   await serverRender(ctx, renderer, template)
 }
 
+// 创建路由
 const router = new Router()
 
+// 当匹配到路由的时候, 使用handleSSR中间件进行路由处理
 router.get('*', handleSSR)
 
 module.exports = router

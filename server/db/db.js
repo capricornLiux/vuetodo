@@ -6,7 +6,7 @@ const axios = require('axios')
 // 线上数据库的命名空间
 const className = 'todo'
 
-// 创建requres对象
+// 创建requres对象, 设置baseURL
 const request = axios.create({
   // 指定baseURL
   baseURL: 'https://d.apicloud.com/mcm/api'
@@ -25,7 +25,7 @@ const createError = (code, resp) => {
 
 /**
  * 处理请求结果
- * @param {object} - 请求结果对象
+ * @param {object} - 请求结果对象, 包含状态码, data数据, 和其他返回
  * @returns {any} 返回数据或者抛出错误
  */
 const handleRequest = ({
@@ -34,8 +34,10 @@ const handleRequest = ({
   ...rest
 }) => {
   if (status === 200) {
+    // 正常状态, 返回数据
     return data
   } else {
+    // 状态错误, 抛出异常
     throw createError(status, rest)
   }
 }
@@ -57,8 +59,6 @@ module.exports = (appId, appKey) => {
         headers: getHeaders()
       }))
     },
-
-    // 添加todo
 
     /**
      * 添加todo

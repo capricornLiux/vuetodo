@@ -89,16 +89,6 @@ export default {
     ]),
 
     // 输入框输入内容, 点击回车按钮时调用
-    // addTodo (e) {
-    //   // unshift 在数组的前端添加并返回数组的长度
-    //   this.todos.unshift({
-    //     id: id++, // 事项索引
-    //     content: e.target.value, // 事项内容
-    //     completed: false // 事项的完成清空, 默认未完成
-    //   })
-    //   // 清空输入框
-    //   e.target.value = ''
-    // },
     handleAdd (e) {
       const content = e.target.value.trim()
       if (!content) {
@@ -109,38 +99,31 @@ export default {
           content,
           completed: false
         }
+        // 执行一个action
         this.addTodo(todo)
         e.target.value = ''
       }
     },
 
-    // 删除事项
-    // deleteTodo (para) {
-    //   // 返回符合条件的第一个元素的索引位置
-    //   let pos = this.todos.findIndex((value, index, arr) => {
-    //     return value.id === para
-    //   })
-    //   this.todos.splice(pos, 1)
-    // },
-
     // 切换todo状态
     toggleTodoState (todo) {
+      // 执行updateTodo的action
       this.updateTodo({
         id: todo.id,
+        // 使用对象的合并方法, 将源对象的所有可枚举属性, 复制到目标对象
         todo: Object.assign({}, todo, {
           completed: !todo.compeleted
         })
       })
     },
 
+    // 切换tab
     toggle (tab) {
       this.filter = tab
     },
+
+    // 清空已完成
     clearCompleted () {
-      // 如果使用splice方法进行删除的话, 删除一个之后后面的顺序就变了, 所以不好
-      // this.todos = this.todos.filter(function (todo) {
-      //   return todo.completed === false
-      // })
       this.deleteCompleted()
     }
   }

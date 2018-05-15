@@ -1,4 +1,6 @@
-import model from '../../model/client-model'
+// import model from '../../model/client-model'
+// 使用打包配置的别名, 区分client和server不同打包环境不同的文件
+import model from 'model'
 import bus from '../../util/eventBus'
 
 // 错误处理
@@ -28,7 +30,8 @@ export const login = ({commit}, {username, password}) => {
 
 export const fetchTodos = ({commit}) => {
   commit('startLoading')
-  model.getAllTodos().then(res => {
+  // 设置返回值, asyncData中需要使用
+  return model.getAllTodos().then(res => {
     commit('stopLoading')
     commit('getTodos', res)
   }).catch(err => {

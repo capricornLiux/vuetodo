@@ -61,6 +61,8 @@ const handleRequest = request => {
       resolve(data.data)
     }).catch(err => {
       // 如果在传入的promise创建的过程中发生错误, 会到这里; 401状态axios也会处理为错误
+      // console.log('handle request catch')
+      // console.log(err)
       const resp = err.response
       if (resp.status === 401) {
         reject(createError(401, resp.data))
@@ -72,7 +74,9 @@ const handleRequest = request => {
 // 创建axios请求对象
 const request = axios.create({
   // 给自己的服务发送请求
-  baseURL: '/'
+  // baseURL: '/'
+  // server端是没有同域的概念的(不会自动加host和port)
+  baseURL: process.env.VUE_ENV === 'server' ? 'http://127.0.0.1:3333' : '/'
 })
 
 // 导出请求对象, 对象上挂载了各种数据接口请求方法

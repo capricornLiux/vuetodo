@@ -156,4 +156,10 @@ if (isDev) {
   })
 }
 
+config.resolve = {
+  alias: {
+    'model': path.resolve(__dirname, '../client/model/client-model.js')
+  }
+}
+
 module.exports = config

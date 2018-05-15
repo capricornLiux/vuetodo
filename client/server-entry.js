@@ -7,7 +7,7 @@ export default context => {
   // 以便服务器在渲染前就已经就绪了所有内容
   return new Promise((resolve, reject) => {
     // 解构app, router
-    const {app, router} = CreateApp()
+    const {app, router, store} = CreateApp()
 
     // 设置服务器端的router位置
     router.push(context.url)
@@ -21,9 +21,23 @@ export default context => {
         // 没有匹配到对应的组件, reject一个错误
         return reject(new Error('no matched component'))
       }
-      // ssr的时候进行meta设置
-      context.meta = app.$meta()
-      resolve(app)
+      // 有匹配的路由
+      Promise.all(matchedComponents.map(Component => {
+        if (Component.asyncData) {
+          // 匹配的组件有asyncData方法
+          return Component.asyncData({
+            route: router.currentRoute,
+            store
+          })
+        }
+      })).then(data => {
+        console.log('store.state')
+        console.log(data)
+        console.log(store.state)
+        // ssr的时候进行meta设置
+        context.meta = app.$meta()
+        resolve(app)
+      })
     })
   })
 }

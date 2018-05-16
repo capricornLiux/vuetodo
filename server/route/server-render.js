@@ -30,7 +30,9 @@ module.exports = async (ctx, renderer, template) => {
       style: context.renderStyles(),
       scripts: context.renderScripts(),
       // 设置meta的title
-      title: title.text()
+      title: title.text(),
+      // 通过context上下文中存储的state, 渲染之后拿到renderState(), 放到模板中
+      initialState: context.renderState()
     })
 
     // 设置response的body

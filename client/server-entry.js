@@ -35,6 +35,8 @@ export default context => {
         console.log(data)
         console.log(store.state)
         // ssr的时候进行meta设置
+        // 将store中的state挂载到上下文中
+        context.state = store.state
         context.meta = app.$meta()
         resolve(app)
       })

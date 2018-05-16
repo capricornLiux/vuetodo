@@ -54,15 +54,17 @@ export default {
   mounted () {
     // 调用获取todos的方法
     // 服务端渲染的时候不会运行mounted生命周期钩子
-    this.fetchTodos()
+    // this.fetchTodos()
+
+    // 根据store.state中的todos判断是否再次发送请求
+    if (this.todos && this.todos.length < 1) {
+      // todos为空
+      // 发送请求
+      this.fetchTodos()
+    }
   },
   // 声明一个方法, 获取数据, 默认不会被执行
   asyncData ({store}) {
-    // return new Promise((resolve, reject) => {
-    //   setTimeout(() => {
-    //     resolve(100)
-    //   }, 2000)
-    // })
     return store.dispatch('fetchTodos')
   },
   computed: {

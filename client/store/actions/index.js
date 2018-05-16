@@ -6,7 +6,7 @@ import bus from '../../util/eventBus'
 // 错误处理
 const handleErr = err => {
   if (err.code === 401) {
-    alert('尚未登录或已超时, 请先登录后再操作') // eslint-disable-line
+    // alert('尚未登录或已超时, 请先登录后再操作') // eslint-disable-line
     // 使用event bus发布事件
     bus.$emit('navLogin')
   }

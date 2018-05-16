@@ -5,8 +5,15 @@ import bus from './util/eventBus'
 // 从CreateApp中解构app, router
 const {
   app,
-  router
+  router,
+  store
 } = CreateApp()
+
+// 判断window.__INITIAL_STATE__
+if (window.__INITIAL_STATE__) {
+  // 状态替换
+  store.replaceState(window.__INITIAL_STATE__)
+}
 
 bus.$on('navLogin', () => {
   router.push('/login')

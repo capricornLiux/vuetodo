@@ -9,6 +9,14 @@ export default context => {
     // 解构app, router
     const {app, router, store} = CreateApp()
 
+    // 获取context上的user
+    console.log('server-entry.js')
+    console.log(context)
+    if (context.user) {
+      // 有的话, 将user放到store.state中
+      store.state.user = context.user
+    }
+
     // 设置服务器端的router位置
     router.push(context.url)
 
@@ -37,6 +45,9 @@ export default context => {
         // ssr的时候进行meta设置
         // 将store中的state挂载到上下文中
         context.state = store.state
+        console.log('app.$meta()')
+        console.log(app.$meta())
+        // 将meta信息挂载到context上下文中
         context.meta = app.$meta()
         resolve(app)
       })

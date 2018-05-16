@@ -7,8 +7,14 @@ module.exports = async (ctx, renderer, template) => {
   ctx.header['Content-Type'] = 'text/html'
 
   // 声明context vue-server-renderer的时候使用
+  console.log('before render.renderToString')
+  console.log(ctx)
+  console.log(ctx.session)
+
+  // 通过ctx能够拿到session, 将这个session放到context中
   const context = {
-    url: ctx.path
+    url: ctx.path,
+    user: ctx.session.user
   }
   // vue-server-renderre渲染完成之后, 在html中插入, 包括client的js路径, css路径
 

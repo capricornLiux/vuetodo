@@ -65,7 +65,14 @@ export default {
   },
   // 声明一个方法, 获取数据, 默认不会被执行
   asyncData ({store}) {
-    return store.dispatch('fetchTodos')
+    // 因为server端直接调用的db, 没有调用api, 所以没有限制
+    if (store.state.user) {
+      // 用户已经登录了
+      return store.dispatch('fetchTodos')
+    } else {
+      // 没有登录, 使用Promise.resolve()方法, 直接返回一个resolved状态的promise对象
+      Promise.resolve()
+    }
   },
   computed: {
     // 使用vuex的getter获取state中的todos

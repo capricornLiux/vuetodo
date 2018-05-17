@@ -3,14 +3,12 @@ const ejs = require('ejs')
 
 // 导出一个响应中间件
 module.exports = async (ctx, renderer, template) => {
+  console.log('server-render')
+  console.log(ctx)
   // 设置响应头
   ctx.header['Content-Type'] = 'text/html'
 
   // 声明context vue-server-renderer的时候使用
-  console.log('before render.renderToString')
-  console.log(ctx)
-  console.log(ctx.session)
-
   // 通过ctx能够拿到session, 将这个session放到context中
   const context = {
     url: ctx.path,
@@ -20,13 +18,9 @@ module.exports = async (ctx, renderer, template) => {
 
   try {
     // 生成body部分
-    console.log('render.renderToString')
-    console.log(context)
     const appString = await renderer.renderToString(context)
-
-    console.log('after render.renderToString')
+    console.log('context')
     console.log(context)
-
     // 获取meta信息
     const {title} = context.meta.inject()
 

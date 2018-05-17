@@ -61,8 +61,6 @@ const handleRequest = request => {
       resolve(data.data)
     }).catch(err => {
       // 如果在传入的promise创建的过程中发生错误, 会到这里; 401状态axios也会处理为错误
-      // console.log('handle request catch')
-      // console.log(err)
       const resp = err.response
       if (resp.status === 401) {
         reject(createError(401, resp.data))

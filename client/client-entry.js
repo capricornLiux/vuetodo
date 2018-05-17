@@ -11,10 +11,11 @@ const {
 
 // 判断window.__INITIAL_STATE__
 if (window.__INITIAL_STATE__) {
-  // 状态替换
+  // 替换 store 的根状态，仅用状态合并或时光旅行调试
   store.replaceState(window.__INITIAL_STATE__)
 }
 
+// 监听action中触发的navLogin事件, 没有登录, 跳转到登录路由界面
 bus.$on('navLogin', () => {
   router.push('/login')
 })

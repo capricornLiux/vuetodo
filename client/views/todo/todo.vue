@@ -141,10 +141,10 @@ export default {
       this.filter = tab
     },
 
-      // 清空已完成
-      clearCompleted () {
-        this.deleteCompleted()
-      }
+    // 清空已完成
+    clearCompleted () {
+      this.deleteCompleted()
+    }
   }
 }
 </script>

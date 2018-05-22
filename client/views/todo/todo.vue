@@ -68,6 +68,7 @@ export default {
     // 因为server端直接调用的db, 没有调用api, 所以没有限制
     if (store.state.user) {
       // 用户已经登录了
+      // 派发一个 action dispatch action
       return store.dispatch('fetchTodos')
     } else {
       // 没有登录, 使用Promise.resolve()方法, 直接返回一个resolved状态的promise对象

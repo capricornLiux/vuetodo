@@ -38,6 +38,7 @@ export default context => {
           // 匹配的组件有asyncData方法
           return Component.asyncData({
             route: router.currentRoute,
+            router,
             store
           })
         }
@@ -47,6 +48,9 @@ export default context => {
         // ssr的时候进行meta设置
         // 将meta信息挂载到context上下文中
         context.meta = app.$meta()
+
+        // 将 router 挂载到 context 中
+        context.router = router
         resolve(app)
       })
     })

@@ -18,7 +18,20 @@ module.exports = async (ctx, renderer, template) => {
 
   try {
     // 生成body部分
+    console.log('renderer.renderToString 之前---------------------')
     const appString = await renderer.renderToString(context)
+
+    console.log('{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{')
+    console.log(context.router.currentRoute.fullPath) // /login
+    console.log(ctx.path) // /
+    console.log('}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}')
+
+    if (context.router.currentRoute.fullPath !== ctx.path) {
+      // 直接返回重定向到的地址
+      return ctx.redirect(context.router.currentRoute.fullPath)
+    }
+
+    console.log('renderer.renderToString end---------------------')
     console.log('context')
     console.log(context)
     // 获取meta信息

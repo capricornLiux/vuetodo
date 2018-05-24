@@ -4,8 +4,6 @@ const path = require('path')
 // 引入vue-loader配置的方法
 // const createVueLoaderOptions = require('./vue-loader.config')
 
-// const isDev = process.env.NODE_ENV === 'development'
-
 const config = {
   // webpack编译为类浏览器环境
   target: 'web',
@@ -33,6 +31,7 @@ const config = {
       {
         test: /\.vue$/,
         loader: 'vue-loader'
+        // 可以选择使用 vue-loader 的配置
         // options: createVueLoaderOptions(isDev)
       },
       {

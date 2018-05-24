@@ -60,19 +60,15 @@ export default {
     if (this.todos && this.todos.length < 1) {
       // todos为空
       // 发送请求
-      console.log('--------------------------------------------------前端请求')
       this.fetchTodos()
     }
   },
   // 声明一个方法, 获取数据, 默认不会被执行
   asyncData ({store, router}) {
     // 因为server端直接调用的db, 没有调用api, 所以没有限制
-    console.log('======================store.state')
-    console.log(store.state)
     if (store.state.user) {
       // 用户已经登录了
       // 派发一个 action dispatch action
-      console.log('+++++++++++++++++++++++')
       return store.dispatch('fetchTodos')
     } else {
       // 没有登录, 进行页面跳转

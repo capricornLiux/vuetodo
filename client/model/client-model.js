@@ -136,7 +136,6 @@ export default {
    */
   getAllTodos() {
     // 使用handleRequest处理请求后的promise
-    console.log('$$$$$$$$$$$$$$$$$')
     return handleRequest(request.get('/api/todos'))
   }
 }

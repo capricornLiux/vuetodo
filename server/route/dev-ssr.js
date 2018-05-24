@@ -55,8 +55,6 @@ serverComplier.watch({}, (error, stats) => {
 
 // 编写一个中间件...处理ssr要返回的东西
 const handleSSR = async (ctx) => {
-  console.log(ctx)
-  console.log('路由进入handleSSR')
   if (!bundle) {
     // 第一次打包的时候没有
     ctx.body = '请稍等...'

@@ -3,8 +3,6 @@ import CreateApp from './create-app'
 
 // vue-server-renderer传递进来的context
 export default context => {
-  console.log('server-entry')
-  console.log(context)
   // 因为有可能是一个异步路由钩子函数或组件, 所以返回一个promise
   // 以便服务器在渲染前就已经就绪了所有内容
   return new Promise((resolve, reject) => {
@@ -24,9 +22,6 @@ export default context => {
     router.onReady(() => {
       // 根据路由跳转获取匹配的路由
       const matchedComponents = router.getMatchedComponents()
-
-      console.log('matchedComponent')
-      console.log(matchedComponents)
 
       if (!matchedComponents.length) {
         // 没有匹配到对应的组件, reject一个错误

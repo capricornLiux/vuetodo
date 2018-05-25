@@ -16,6 +16,9 @@
         <!-- 使用Footer组件 -->
         <Footer></Footer>
 
+        <!-- 使用全局组件 Notification -->
+        <notification content="test" />
+
         <!-- 使用loading组件 -->
         <div id="loading" v-show="loading">
           <loading></loading>
